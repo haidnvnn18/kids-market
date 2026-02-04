@@ -28,7 +28,7 @@ class RegisterRequest extends FormRequest
             'username' => 'required|string|min:3|max:255|unique:users',
             'password' => 'required|string|min:6',
             'fullname' => 'required|string|max:255',
-            'phone' => 'nullable|string|unique:users',
+            'phone' => 'nullable|string',
             'dob' => 'nullable|date_format:Y-m-d',
         ];
     }
@@ -47,7 +47,6 @@ class RegisterRequest extends FormRequest
             'password.required' => 'Mật khẩu là bắt buộc',
             'password.min' => 'Mật khẩu phải có ít nhất 6 ký tự',
             'fullname.required' => 'Họ tên là bắt buộc',
-            'phone.unique' => 'Số điện thoại đã được sử dụng',
             'dob.date_format' => 'Định dạng ngày sinh không hợp lệ (Y-m-d)',
         ];
     }

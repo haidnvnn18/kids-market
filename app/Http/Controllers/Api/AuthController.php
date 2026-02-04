@@ -134,4 +134,36 @@ class AuthController extends Controller
         
         return $signature_input . '.' . $signature_encoded;
     }
+
+    /**
+     * Check if username exists
+     */
+    public function checkUsername(\Illuminate\Http\Request $request): JsonResponse
+    {
+        try {
+            $username = $request->query('username');
+
+            if (!$username) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Tên đăng nhập là bắt buộc'
+                ], 400);
+            }
+
+            $exists = User::where('username', $username)->exists();
+
+            return response()->json([
+                'success' => true,
+                'exists' => $exists,
+                'message' => $exists ? 'Tên đăng nhập đã được sử dụng' : 'Tên đăng nhập khả dụng'
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Lỗi khi kiểm tra tên đăng nhập',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
 }
