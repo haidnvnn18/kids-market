@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\LoginRequest;
+use App\Http\Requests\SocialLoginRequest;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
@@ -79,7 +80,16 @@ class AuthController extends Controller
                 'success' => true,
                 'userId' => (string)$user->id,
                 'accessToken' => $accessToken,
-                'message' => 'Đăng nhập thành công'
+                'message' => 'Đăng nhập thành công',
+                'data' => [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'username' => $user->username,
+                    'email' => $user->email,
+                    'phone' => $user->phone,
+                    'avatar' => $user->avatar,
+                    'role' => $user->role,
+                ]
             ], 200);
 
         } catch (\Exception $e) {
@@ -133,6 +143,71 @@ class AuthController extends Controller
         $signature_encoded = rtrim(strtr(base64_encode($signature), '+/', '-_'), '=');
         
         return $signature_input . '.' . $signature_encoded;
+    }
+
+    /**
+     * Social login (Google/Facebook)
+     */
+    public function socialLogin(SocialLoginRequest $request): JsonResponse
+    {
+        try {
+            $email = $request->email;
+            $type = $request->type;
+            $token = $request->token;
+
+            // Check if user exists
+            $user = User::where('email', $email)->first();
+
+            if ($user) {
+                // User exists - update provider info if needed
+                if ($user->login_provider !== $type) {
+                    // Update provider info
+                    $user->update([
+                        'login_provider' => $type,
+                        'provider_id' => $token,
+                    ]);
+                }
+            } else {
+                // Create new user
+                $user = User::create([
+                    'name' => $request->fullname,
+                    'email' => $email,
+                    'phone' => $request->phone,
+                    'avatar' => $request->avatar,
+                    'role' => 'buyer',
+                    'login_provider' => $type,
+                    'provider_id' => $token,
+                ]);
+
+                // Create cart for new user
+                $user->cart()->create();
+            }
+
+            // Generate access token
+            $accessToken = $this->generateAccessToken($user);
+
+            return response()->json([
+                'success' => true,
+                'userId' => (string)$user->id,
+                'accessToken' => $accessToken,
+                'message' => 'Đăng nhập thành công',
+                'data' => [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'phone' => $user->phone,
+                    'avatar' => $user->avatar,
+                    'role' => $user->role,
+                ]
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Đăng nhập qua ' . $request->type . ' thất bại',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
     /**
