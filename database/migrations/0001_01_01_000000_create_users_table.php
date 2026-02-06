@@ -22,7 +22,7 @@ return new class extends Migration
 
             $table->enum('role', ['buyer', 'seller', 'admin'])->default('buyer');
             $table->enum('login_provider', ['local', 'google', 'facebook', 'apple'])->default('local');
-            $table->string('provider_id')->nullable();
+            $table->text('provider_id')->nullable();
             $table->string('avatar')->nullable();
 
             $table->timestamp('email_verified_at')->nullable();
