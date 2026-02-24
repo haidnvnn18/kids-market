@@ -19,20 +19,20 @@ class ProductImageSeeder extends Seeder
             // Tạo ảnh chính
             ProductImage::create([
                 'product_id' => $product->id,
-                'image_url' => 'https://via.placeholder.com/400x400?text=' . urlencode($product->name) . '+1',
+                'image_url' => 'https://picsum.photos/500/500?random=1',
                 'is_main' => true,
             ]);
 
             // Tạo ảnh phụ
             ProductImage::create([
                 'product_id' => $product->id,
-                'image_url' => 'https://via.placeholder.com/400x400?text=' . urlencode($product->name) . '+2',
+                'image_url' => 'https://picsum.photos/500/500?random=1',
                 'is_main' => false,
             ]);
 
             ProductImage::create([
                 'product_id' => $product->id,
-                'image_url' => 'https://via.placeholder.com/400x400?text=' . urlencode($product->name) . '+3',
+                'image_url' => 'https://picsum.photos/500/500?random=1',
                 'is_main' => false,
             ]);
         }

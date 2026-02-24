@@ -13,6 +13,8 @@ Route::get('/check-username', [AuthController::class, 'checkUsername']);
 
 // Product routes
 Route::get('/products/search', [ProductController::class, 'search']);
+Route::get('/products/recommendations/home', [ProductController::class, 'getHomePageRecommendations'])->middleware('auth.token.optional');
+Route::post('/products/{id}/track-view', [ProductController::class, 'trackView'])->middleware('auth.token');
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/{id}', [ProductController::class, 'show']);
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\ProductView;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 
@@ -110,6 +111,126 @@ class ProductController extends Controller
                 'message' => 'Sản phẩm không tìm thấy',
                 'error' => $e->getMessage()
             ], 404);
+        }
+    }
+
+    /**
+     * Get recommended products for homepage based on user's viewed products
+     */
+    public function getHomePageRecommendations(Request $request): JsonResponse
+    {
+        try {
+            $perPage = $request->query('per_page', 10);
+            $user = $request->attributes->get('auth_user');
+
+            if (!$user) {
+                // If user is not authenticated, return popular products by view count
+                $products = Product::where('status', 'active')
+                    ->with(['supplier', 'category', 'variants', 'images'])
+                    ->withCount('views')
+                    ->orderBy('views_count', 'desc')
+                    ->paginate($perPage);
+
+                return response()->json([
+                    'success' => true,
+                    'data' => $products,
+                    'recommendation_type' => 'popular'
+                ], 200);
+            }
+
+            // Get user's recently viewed products (last 20 views)
+            $viewedProductIds = ProductView::where('user_id', $user->id)
+                ->orderBy('created_at', 'desc')
+                ->limit(20)
+                ->pluck('product_id')
+                ->toArray();
+
+            // If user has viewed products, get related products
+            if (!empty($viewedProductIds)) {
+                // Get categories and suppliers from viewed products
+                $viewedProducts = Product::whereIn('id', $viewedProductIds)->get();
+                $categoryIds = $viewedProducts->pluck('category_id')->unique()->toArray();
+                $supplierIds = $viewedProducts->pluck('supplier_id')->unique()->toArray();
+
+                // Get related products: same category or supplier, excluding already viewed
+                $products = Product::where('status', 'active')
+                    ->whereNotIn('id', $viewedProductIds)
+                    ->where(function ($query) use ($categoryIds, $supplierIds) {
+                        $query->whereIn('category_id', $categoryIds)
+                              ->orWhereIn('supplier_id', $supplierIds);
+                    })
+                    ->with(['supplier', 'category', 'variants', 'images'])
+                    ->orderBy('created_at', 'desc')
+                    ->paginate($perPage);
+
+                return response()->json([
+                    'success' => true,
+                    'data' => $products,
+                    'recommendation_type' => 'related'
+                ], 200);
+            }
+
+            // If user has no view history, return newest active products
+            $products = Product::where('status', 'active')
+                ->with(['supplier', 'category', 'variants', 'images'])
+                ->orderBy('created_at', 'desc')
+                ->paginate($perPage);
+
+            return response()->json([
+                'success' => true,
+                'data' => $products,
+                'recommendation_type' => 'newest'
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Lỗi khi lấy danh sách sản phẩm đề xuất',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Track product view for logged-in users
+     */
+    public function trackView(Request $request, $id): JsonResponse
+    {
+        try {
+            $user = $request->attributes->get('auth_user');
+
+            if (!$user) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Vui lòng đăng nhập để ghi nhận hoạt động xem sản phẩm'
+                ], 401);
+            }
+
+            $product = Product::findOrFail($id);
+
+            // Create or update the view record
+            ProductView::updateOrCreate(
+                [
+                    'user_id' => $user->id,
+                    'product_id' => $id,
+                ],
+                [
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]
+            );
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Đã ghi nhận hoạt động xem sản phẩm'
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Lỗi khi ghi nhận hoạt động xem sản phẩm',
+                'error' => $e->getMessage()
+            ], 500);
         }
     }
 }
