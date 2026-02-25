@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\ReviewController;
+use App\Http\Controllers\Api\ShopController;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
@@ -26,3 +27,7 @@ Route::post('/products/{id}/reviews', [ReviewController::class, 'store'])->middl
 // Cart routes
 Route::get('/cart', [CartController::class, 'index'])->middleware('auth.token');
 Route::post('/cart', [CartController::class, 'store'])->middleware('auth.token');
+
+// Shop routes
+Route::get('/shops/{id}', [ShopController::class, 'show']);
+Route::get('/shops/{id}/products', [ShopController::class, 'getProducts']);
