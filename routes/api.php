@@ -24,4 +24,5 @@ Route::get('/products/{id}/reviews', [ReviewController::class, 'index']);
 Route::post('/products/{id}/reviews', [ReviewController::class, 'store'])->middleware('auth.token');
 
 // Cart routes
+Route::get('/cart', [CartController::class, 'index'])->middleware('auth.token');
 Route::post('/cart', [CartController::class, 'store'])->middleware('auth.token');
