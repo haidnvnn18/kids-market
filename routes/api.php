@@ -7,6 +7,9 @@ use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\ReviewController;
 use App\Http\Controllers\Api\ShopController;
+use App\Http\Controllers\Api\ProvinceController;
+use App\Http\Controllers\Api\DistrictController;
+use App\Http\Controllers\Api\ShippingAddressController;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
@@ -31,3 +34,17 @@ Route::post('/cart', [CartController::class, 'store'])->middleware('auth.token')
 // Shop routes
 Route::get('/shops/{id}', [ShopController::class, 'show']);
 Route::get('/shops/{id}/products', [ShopController::class, 'getProducts']);
+
+// Province and District routes
+Route::get('/provinces', [ProvinceController::class, 'index']);
+Route::get('/provinces/{id}', [ProvinceController::class, 'show']);
+Route::get('/provinces/{provinceId}/districts', [DistrictController::class, 'index']);
+
+// Shipping address routes
+Route::middleware('auth.token')->group(function () {
+    Route::get('/shipping-addresses', [ShippingAddressController::class, 'index']);
+    Route::post('/shipping-addresses', [ShippingAddressController::class, 'store']);
+    Route::put('/shipping-addresses/{id}', [ShippingAddressController::class, 'update']);
+    Route::patch('/shipping-addresses/{id}/set-default', [ShippingAddressController::class, 'setDefault']);
+    Route::delete('/shipping-addresses/{id}', [ShippingAddressController::class, 'destroy']);
+});

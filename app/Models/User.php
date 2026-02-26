@@ -73,4 +73,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(ProductView::class);
     }
+
+    public function shippingAddresses()
+    {
+        return $this->hasMany(ShippingAddress::class);
+    }
 }
