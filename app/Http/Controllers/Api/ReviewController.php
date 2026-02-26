@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Review;
 use App\Models\Product;
+use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class ReviewController extends Controller
 {
@@ -103,13 +105,27 @@ class ReviewController extends Controller
                 ], 409);
             }
 
-            // Create review
-            $review = Review::create([
-                'user_id' => $user->id,
-                'product_id' => $productId,
-                'rating' => $request->rating,
-                'comment' => $request->comment,
-            ]);
+            // Create review and update supplier rating in transaction
+            $review = DB::transaction(function () use ($user, $productId, $request, $product) {
+                // Create review
+                $review = Review::create([
+                    'user_id' => $user->id,
+                    'product_id' => $productId,
+                    'rating' => $request->rating,
+                    'comment' => $request->comment,
+                ]);
+
+                // Calculate average rating for all products of this supplier
+                $averageRating = Review::whereIn('product_id', 
+                    Product::where('supplier_id', $product->supplier_id)->pluck('id')
+                )->avg('rating');
+
+                // Update supplier's rating_avg
+                Supplier::where('id', $product->supplier_id)
+                    ->update(['rating_avg' => round($averageRating, 2)]);
+
+                return $review;
+            });
 
             // Load user relationship
             $review->load('user:id,name,email');

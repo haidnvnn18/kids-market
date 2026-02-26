@@ -26,6 +26,8 @@ class ShopController extends Controller
                     'country' => $shop->country,
                     'description' => $shop->description,
                     'rating_avg' => $shop->rating_avg,
+                    'avatar' => $shop->avatar,
+                    'banner' => $shop->banner,
                     'owner' => [
                         'id' => $shop->user->id,
                         'name' => $shop->user->name,
@@ -92,6 +94,8 @@ class ShopController extends Controller
                         'id' => $shop->id,
                         'brand_name' => $shop->brand_name,
                         'rating_avg' => $shop->rating_avg,
+                        'avatar' => $shop->avatar,
+                        'banner' => $shop->banner,
                     ],
                     'products' => $products->items(),
                     'pagination' => [

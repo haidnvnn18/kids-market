@@ -15,6 +15,8 @@ class Supplier extends Model
         'country',
         'description',
         'rating_avg',
+        'avatar',
+        'banner',
     ];
 
     public function user()
