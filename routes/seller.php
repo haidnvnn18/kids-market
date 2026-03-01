@@ -5,6 +5,7 @@ use App\Http\Controllers\Seller\DashboardController;
 use App\Http\Controllers\Seller\OrderController;
 use App\Http\Controllers\Seller\PasswordResetController;
 use App\Http\Controllers\Seller\ProductController;
+use App\Http\Controllers\Seller\ReviewController;
 use App\Http\Controllers\Seller\ShopController;
 use Illuminate\Support\Facades\Route;
 
@@ -52,8 +53,12 @@ Route::middleware('seller')->prefix('seller')->name('seller.')->group(function (
     Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
     Route::patch('/orders/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.update-status');
 
+    // Review Management
+    Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
+    Route::post('/reviews/{review}/reply', [ReviewController::class, 'reply'])->name('reviews.reply');
+
     // Logout
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-    // TODO: Add other seller routes here (reviews)
+    // TODO: Add other seller routes here
 });
