@@ -11,10 +11,10 @@ use App\Http\Controllers\Api\ProvinceController;
 use App\Http\Controllers\Api\DistrictController;
 use App\Http\Controllers\Api\ShippingAddressController;
 
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
-Route::post('/social-login', [AuthController::class, 'socialLogin']);
-Route::get('/check-username', [AuthController::class, 'checkUsername']);
+Route::post('/register', [AuthController::class, 'register'])->middleware('throttle:api-register');
+Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:api-login');
+Route::post('/social-login', [AuthController::class, 'socialLogin'])->middleware('throttle:api-social-login');
+Route::get('/check-username', [AuthController::class, 'checkUsername'])->middleware('throttle:api-check-username');
 
 // Product routes
 Route::get('/products/search', [ProductController::class, 'search']);

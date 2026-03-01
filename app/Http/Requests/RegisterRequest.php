@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rules\Password;
 
 class RegisterRequest extends FormRequest
 {
@@ -25,10 +26,10 @@ class RegisterRequest extends FormRequest
     {
         return [
             'type' => 'required|string|in:basic',
-            'username' => 'required|string|min:3|max:255|unique:users',
-            'password' => 'required|string|min:6',
+            'username' => ['required', 'string', 'min:3', 'max:50', 'regex:/^[A-Za-z0-9_.-]+$/', 'unique:users,username'],
+            'password' => ['required', 'string', Password::min(8)->letters()->numbers()->uncompromised()],
             'fullname' => 'required|string|max:255',
-            'phone' => 'nullable|string',
+            'phone' => ['nullable', 'string', 'max:20', 'regex:/^[0-9+\-\s().]{8,20}$/'],
             'dob' => 'nullable|date_format:Y-m-d',
         ];
     }
@@ -44,9 +45,14 @@ class RegisterRequest extends FormRequest
             'username.required' => 'Tên đăng nhập là bắt buộc',
             'username.unique' => 'Tên đăng nhập đã được sử dụng',
             'username.min' => 'Tên đăng nhập phải có ít nhất 3 ký tự',
+            'username.regex' => 'Tên đăng nhập chỉ được chứa chữ, số và các ký tự . _ -',
             'password.required' => 'Mật khẩu là bắt buộc',
-            'password.min' => 'Mật khẩu phải có ít nhất 6 ký tự',
+            'password.min' => 'Mật khẩu phải có ít nhất 8 ký tự',
+            'password.letters' => 'Mật khẩu phải chứa ít nhất một chữ cái',
+            'password.numbers' => 'Mật khẩu phải chứa ít nhất một chữ số',
+            'password.uncompromised' => 'Mật khẩu này không an toàn, vui lòng chọn mật khẩu khác',
             'fullname.required' => 'Họ tên là bắt buộc',
+            'phone.regex' => 'Số điện thoại không hợp lệ',
             'dob.date_format' => 'Định dạng ngày sinh không hợp lệ (Y-m-d)',
         ];
     }

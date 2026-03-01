@@ -7,8 +7,8 @@ use App\Models\User;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
 
 class AuthController extends Controller
@@ -30,8 +30,11 @@ class AuthController extends Controller
             
             if ($user->role !== 'seller') {
                 Auth::logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+
                 return back()->withErrors([
-                    'email' => 'Tài khoản không có quyền truy cập.',
+                    'email' => 'Thông tin đăng nhập không chính xác.',
                 ])->onlyInput('email');
             }
 
@@ -61,22 +64,29 @@ class AuthController extends Controller
             'description' => ['nullable', 'string'],
         ]);
 
-        $user = User::create([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'phone' => $validated['phone'] ?? null,
-            'password' => Hash::make($validated['password']),
-            'role' => 'seller',
-        ]);
+        $validated['email'] = mb_strtolower($validated['email']);
 
-        Supplier::create([
-            'user_id' => $user->id,
-            'brand_name' => $validated['brand_name'],
-            'country' => $validated['country'],
-            'description' => $validated['description'] ?? null,
-        ]);
+        $user = DB::transaction(function () use ($validated) {
+            $user = User::create([
+                'name' => $validated['name'],
+                'email' => $validated['email'],
+                'phone' => $validated['phone'] ?? null,
+                'password' => Hash::make($validated['password']),
+                'role' => 'seller',
+            ]);
+
+            Supplier::create([
+                'user_id' => $user->id,
+                'brand_name' => $validated['brand_name'],
+                'country' => $validated['country'],
+                'description' => $validated['description'] ?? null,
+            ]);
+
+            return $user;
+        });
 
         Auth::login($user);
+        $request->session()->regenerate();
 
         return redirect()->route('seller.dashboard')->with('success', 'Đăng ký thành công!');
     }

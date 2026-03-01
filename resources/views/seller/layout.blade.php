@@ -6,6 +6,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Seller Dashboard') - KidsMarket</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <!-- Tom Select CSS for beautiful select dropdowns -->
+    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.bootstrap5.min.css" rel="stylesheet"/>
 </head>
 <body class="h-full">
     <div class="min-h-full">
@@ -40,8 +42,8 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" 
-                                       class="text-gray-700 hover:bg-gray-50 hover:text-indigo-600 group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6">
+                                    <a href="{{ route('seller.products.index') }}" 
+                                       class="{{ request()->routeIs('seller.products.*') ? 'bg-gray-50 text-indigo-600' : 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600' }} group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6">
                                         <svg class="h-6 w-6 shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
                                         </svg>
@@ -115,5 +117,20 @@
             </main>
         </div>
     </div>
+    <!-- Tom Select JS for beautiful select dropdowns -->
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
+    <script>
+        // Initialize Tom Select for all select elements with tom-select class
+        document.addEventListener('DOMContentLoaded', function() {
+            const tomSelects = document.querySelectorAll('select[data-tom-select]');
+            tomSelects.forEach(select => {
+                new TomSelect(select, {
+                    create: false,
+                    placeholder: select.placeholder || 'Chọn một tùy chọn...',
+                    allowEmptyOption: true,
+                });
+            });
+        });
+    </script>
 </body>
 </html>

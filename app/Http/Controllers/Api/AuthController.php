@@ -9,6 +9,7 @@ use App\Http\Requests\SocialLoginRequest;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -18,10 +19,12 @@ class AuthController extends Controller
     public function register(RegisterRequest $request): JsonResponse
     {
         try {
+            $username = Str::lower((string) $request->username);
+
             // Create new user
             $user = User::create([
                 'name' => $request->fullname,
-                'username' => $request->username,
+                'username' => $username,
                 'password' => bcrypt($request->password),
                 'phone' => $request->phone,
                 'dob' => $request->dob,
@@ -49,7 +52,6 @@ class AuthController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Đăng ký tài khoản thất bại',
-                'error' => $e->getMessage()
             ], 500);
         }
     }
@@ -96,7 +98,6 @@ class AuthController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Đăng nhập thất bại',
-                'error' => $e->getMessage()
             ], 500);
         }
     }
@@ -205,7 +206,6 @@ class AuthController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Đăng nhập qua ' . $request->type . ' thất bại',
-                'error' => $e->getMessage()
             ], 500);
         }
     }
@@ -225,6 +225,13 @@ class AuthController extends Controller
                 ], 400);
             }
 
+            if (mb_strlen($username) < 3 || mb_strlen($username) > 50) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Tên đăng nhập phải từ 3 đến 50 ký tự'
+                ], 422);
+            }
+
             $exists = User::where('username', $username)->exists();
 
             return response()->json([
@@ -237,7 +244,6 @@ class AuthController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Lỗi khi kiểm tra tên đăng nhập',
-                'error' => $e->getMessage()
             ], 500);
         }
     }

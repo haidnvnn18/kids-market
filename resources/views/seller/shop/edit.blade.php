@@ -135,9 +135,9 @@
                         Tên thương hiệu <span class="text-red-500">*</span>
                     </label>
                     <div class="mt-2">
-                        <input type="text" name="brand_name" id="brand_name" 
+                           <input type="text" name="brand_name" id="brand_name" 
                                value="{{ old('brand_name', $supplier->brand_name) }}"
-                               class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-3 @error('brand_name') ring-red-300 focus:ring-red-500 @enderror"
+                               class="block w-full rounded-md border-0 py-2 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 @error('brand_name') ring-red-300 focus:ring-red-500 @enderror"
                                required>
                     </div>
                     @error('brand_name')
@@ -151,8 +151,8 @@
                         Quốc gia <span class="text-red-500">*</span>
                     </label>
                     <div class="mt-2">
-                        <select name="country" id="country" 
-                                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-3 @error('country') ring-red-300 focus:ring-red-500 @enderror"
+                        <select name="country" id="country" data-tom-select placeholder="Chọn quốc gia"
+                            class="block w-full rounded-md border-0 py-2 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 @error('country') ring-red-300 focus:ring-red-500 @enderror"
                                 required>
                             <option value="VN" {{ old('country', $supplier->country) == 'VN' ? 'selected' : '' }}>🇻🇳 Việt Nam</option>
                             <option value="CN" {{ old('country', $supplier->country) == 'CN' ? 'selected' : '' }}>🇨🇳 Trung Quốc</option>
@@ -173,7 +173,7 @@
                     </label>
                     <div class="mt-2">
                         <textarea name="description" id="description" rows="4" 
-                                  class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-3 @error('description') ring-red-300 focus:ring-red-500 @enderror"
+                                  class="block w-full rounded-md border-0 py-2 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 @error('description') ring-red-300 focus:ring-red-500 @enderror"
                                   placeholder="Mô tả ngắn về cửa hàng của bạn...">{{ old('description', $supplier->description) }}</textarea>
                     </div>
                     @error('description')
