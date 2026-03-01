@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Seller\AuthController;
 use App\Http\Controllers\Seller\DashboardController;
+use App\Http\Controllers\Seller\OrderController;
 use App\Http\Controllers\Seller\PasswordResetController;
 use App\Http\Controllers\Seller\ProductController;
 use App\Http\Controllers\Seller\ShopController;
@@ -46,8 +47,13 @@ Route::middleware('seller')->prefix('seller')->name('seller.')->group(function (
     Route::resource('products', ProductController::class)->except(['show']);
     Route::delete('/products/images/{image}', [ProductController::class, 'deleteImage'])->name('products.delete-image');
 
+    // Order Management
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+    Route::patch('/orders/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.update-status');
+
     // Logout
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-    // TODO: Add other seller routes here (orders, reviews)
+    // TODO: Add other seller routes here (reviews)
 });
