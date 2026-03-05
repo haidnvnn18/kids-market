@@ -19,48 +19,18 @@
         </div>
     </div>
 
-    @if(session('success'))
-        <div class="mb-6 rounded-md bg-green-50 p-4">
-            <div class="flex">
-                <div class="flex-shrink-0">
-                    <svg class="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd" />
-                    </svg>
-                </div>
-                <div class="ml-3">
-                    <p class="text-sm font-medium text-green-800">{{ session('success') }}</p>
-                </div>
-            </div>
-        </div>
-    @endif
-
-    @if($errors->any())
-        <div class="mb-6 rounded-md bg-red-50 p-4">
-            <div class="flex">
-                <div class="flex-shrink-0">
-                    <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd" />
-                    </svg>
-                </div>
-                <div class="ml-3">
-                    <h3 class="text-sm font-medium text-red-800">Có lỗi xảy ra:</h3>
-                    <ul class="mt-2 list-disc list-inside text-sm text-red-700">
-                        @foreach($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            </div>
-        </div>
-    @endif
-
     <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
         <!-- Main Content -->
         <div class="lg:col-span-2 space-y-8">
             <!-- Order Items -->
             <div class="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl">
                 <div class="px-4 py-6 sm:p-8">
-                    <h2 class="text-base font-semibold leading-7 text-gray-900">Sản phẩm đặt hàng</h2>
+                    <h2 class="text-base font-semibold leading-7 text-gray-900 flex items-center gap-x-2">
+                        <svg class="h-5 w-5 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                        </svg>
+                        Sản phẩm đặt hàng
+                    </h2>
                     <div class="mt-6 flow-root">
                         <ul role="list" class="-my-6 divide-y divide-gray-200">
                             @foreach($order->items as $item)
@@ -110,7 +80,12 @@
             <!-- Customer Information -->
             <div class="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl">
                 <div class="px-4 py-6 sm:p-8">
-                    <h2 class="text-base font-semibold leading-7 text-gray-900">Thông tin khách hàng</h2>
+                    <h2 class="text-base font-semibold leading-7 text-gray-900 flex items-center gap-x-2">
+                        <svg class="h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                        </svg>
+                        Thông tin khách hàng
+                    </h2>
                     <div class="mt-6 space-y-4">
                         <div>
                             <dt class="text-sm font-medium text-gray-500">Tên khách hàng</dt>
@@ -129,75 +104,86 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Shipping Address -->
+            <div class="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl">
+                <div class="px-4 py-6 sm:p-8">
+                    <h2 class="text-base font-semibold leading-7 text-gray-900 flex items-center gap-x-2">
+                        <svg class="h-5 w-5 text-red-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                        </svg>
+                        Địa chỉ giao hàng
+                    </h2>
+                    <div class="mt-6 space-y-4">
+                        <div>
+                            <dt class="text-sm font-medium text-gray-500">Người nhận</dt>
+                            <dd class="mt-1 text-sm text-gray-900">{{ $order->shipping_full_name }}</dd>
+                        </div>
+                        <div>
+                            <dt class="text-sm font-medium text-gray-500">Số điện thoại</dt>
+                            <dd class="mt-1 text-sm text-gray-900">{{ $order->shipping_phone }}</dd>
+                        </div>
+                        <div>
+                            <dt class="text-sm font-medium text-gray-500">Địa chỉ</dt>
+                            <dd class="mt-1 text-sm text-gray-900">
+                                {{ $order->shipping_address_detail }}<br>
+                                @if($order->shippingDistrict)
+                                    {{ $order->shippingDistrict->name }},
+                                @endif
+                                @if($order->shippingProvince)
+                                    {{ $order->shippingProvince->name }}
+                                @endif
+                            </dd>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Sidebar -->
         <div class="space-y-8">
-            <!-- Order Status -->
+            <!-- Order Summary & Status -->
             <div class="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl">
                 <div class="px-4 py-6 sm:p-8">
-                    <h2 class="text-base font-semibold leading-7 text-gray-900">Trạng thái đơn hàng</h2>
-                    <div class="mt-6">
-                        <div class="text-center">
-                            @if($order->status === 'pending')
-                                <span class="inline-flex items-center rounded-full bg-yellow-100 px-4 py-2 text-sm font-medium text-yellow-800">
-                                    Chờ xử lý
-                                </span>
-                            @elseif($order->status === 'paid')
-                                <span class="inline-flex items-center rounded-full bg-blue-100 px-4 py-2 text-sm font-medium text-blue-800">
-                                    Đã thanh toán
-                                </span>
-                            @elseif($order->status === 'shipping')
-                                <span class="inline-flex items-center rounded-full bg-purple-100 px-4 py-2 text-sm font-medium text-purple-800">
-                                    Đang giao hàng
-                                </span>
-                            @elseif($order->status === 'completed')
-                                <span class="inline-flex items-center rounded-full bg-green-100 px-4 py-2 text-sm font-medium text-green-800">
-                                    Hoàn thành
-                                </span>
-                            @else
-                                <span class="inline-flex items-center rounded-full bg-red-100 px-4 py-2 text-sm font-medium text-red-800">
-                                    Đã hủy
-                                </span>
-                            @endif
-                        </div>
-
-                        @if($order->status !== 'completed' && $order->status !== 'cancelled')
-                            <form method="POST" action="{{ route('seller.orders.update-status', $order) }}" class="mt-6">
-                                @csrf
-                                @method('PATCH')
-                                <label for="status" class="block text-sm font-medium text-gray-700 mb-2">Cập nhật trạng thái</label>
-                                <select name="status" id="status" required class="block w-full rounded-md border-0 py-2 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm mb-4">
-                                    @if($order->status === 'pending')
-                                        <option value="paid">Đã thanh toán</option>
-                                        <option value="cancelled">Hủy đơn</option>
-                                    @elseif($order->status === 'paid')
-                                        <option value="shipping">Đang giao hàng</option>
-                                        <option value="cancelled">Hủy đơn</option>
-                                    @elseif($order->status === 'shipping')
-                                        <option value="completed">Hoàn thành</option>
-                                        <option value="cancelled">Hủy đơn</option>
-                                    @endif
-                                </select>
-                                <button type="submit" class="w-full rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                                    Cập nhật
-                                </button>
-                            </form>
-                        @endif
-                    </div>
-                </div>
-            </div>
-
-            <!-- Order Summary -->
-            <div class="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl">
-                <div class="px-4 py-6 sm:p-8">
-                    <h2 class="text-base font-semibold leading-7 text-gray-900">Tổng quan đơn hàng</h2>
+                    <h2 class="text-base font-semibold leading-7 text-gray-900 flex items-center gap-x-2">
+                        <svg class="h-5 w-5 text-purple-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z" />
+                        </svg>
+                        Tổng quan đơn hàng
+                    </h2>
                     <div class="mt-6 space-y-4">
-                        <div class="flex justify-between text-sm">
+                        <div>
+                            <dt class="text-sm font-medium text-gray-500">Trạng thái</dt>
+                            <dd class="mt-2">
+                                @if($order->status === 'pending')
+                                    <span class="inline-flex items-center rounded-full bg-yellow-100 px-3 py-1 text-xs font-medium text-yellow-800">
+                                        Chờ xử lý
+                                    </span>
+                                @elseif($order->status === 'paid')
+                                    <span class="inline-flex items-center rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-800">
+                                        Đã thanh toán
+                                    </span>
+                                @elseif($order->status === 'shipping')
+                                    <span class="inline-flex items-center rounded-full bg-purple-100 px-3 py-1 text-xs font-medium text-purple-800">
+                                        Đang giao hàng
+                                    </span>
+                                @elseif($order->status === 'completed')
+                                    <span class="inline-flex items-center rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-800">
+                                        Hoàn thành
+                                    </span>
+                                @else
+                                    <span class="inline-flex items-center rounded-full bg-red-100 px-3 py-1 text-xs font-medium text-red-800">
+                                        Đã hủy
+                                    </span>
+                                @endif
+                            </dd>
+                        </div>
+                        <div class="border-t border-gray-200 pt-4 flex justify-between text-sm">
                             <dt class="text-gray-600">Tổng tiền hàng</dt>
                             <dd class="font-medium text-gray-900">{{ number_format($order->total_amount, 0, ',', '.') }} ₫</dd>
                         </div>
-                        <div class="border-t border-gray-200 pt-4 flex justify-between text-base font-semibold">
+                        <div class="flex justify-between text-base font-semibold">
                             <dt class="text-gray-900">Tổng cộng</dt>
                             <dd class="text-indigo-600">{{ number_format($order->total_amount, 0, ',', '.') }} ₫</dd>
                         </div>
@@ -205,19 +191,38 @@
                 </div>
             </div>
 
-            <!-- Payment Information -->
+            <!-- Payment Information & Update -->
             @if($order->payment)
                 <div class="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl">
                     <div class="px-4 py-6 sm:p-8">
-                        <h2 class="text-base font-semibold leading-7 text-gray-900">Thông tin thanh toán</h2>
+                        <h2 class="text-base font-semibold leading-7 text-gray-900 flex items-center gap-x-2">
+                            <svg class="h-5 w-5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" />
+                            </svg>
+                            Thanh toán
+                        </h2>
                         <div class="mt-6 space-y-4">
                             <div>
                                 <dt class="text-sm font-medium text-gray-500">Phương thức</dt>
                                 <dd class="mt-1 text-sm text-gray-900">{{ $order->payment->method }}</dd>
                             </div>
                             <div>
-                                <dt class="text-sm font-medium text-gray-500">Trạng thái thanh toán</dt>
-                                <dd class="mt-1 text-sm text-gray-900">{{ $order->payment->status }}</dd>
+                                <dt class="text-sm font-medium text-gray-500">Trạng thái</dt>
+                                <dd class="mt-2">
+                                    @if($order->payment->status === 'pending')
+                                        <span class="inline-flex items-center rounded-full bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800">
+                                            Chờ thanh toán
+                                        </span>
+                                    @elseif($order->payment->status === 'success')
+                                        <span class="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800">
+                                            Đã thanh toán
+                                        </span>
+                                    @else
+                                        <span class="inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-800">
+                                            Thất bại
+                                        </span>
+                                    @endif
+                                </dd>
                             </div>
                             @if($order->payment->paid_at)
                                 <div>
@@ -225,16 +230,43 @@
                                     <dd class="mt-1 text-sm text-gray-900">{{ $order->payment->paid_at->format('d/m/Y H:i') }}</dd>
                                 </div>
                             @endif
+
+                            @if($order->payment->status !== 'success' && $order->status !== 'cancelled')
+                                <div class="border-t border-gray-200 pt-4">
+                                    <form method="POST" action="{{ route('seller.orders.update-payment-status', $order) }}">
+                                        @csrf
+                                        @method('PATCH')
+                                        <label for="payment_status" class="block text-sm font-medium text-gray-700 mb-2">Cập nhật trạng thái</label>
+                                        <select name="payment_status" id="payment_status" required data-tom-select class="block w-full rounded-md border-0 py-2 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm mb-4">
+                                            <option value="">Chọn trạng thái...</option>
+                                            @if($order->payment->status === 'pending')
+                                                <option value="success">Đã thanh toán</option>
+                                                <option value="failed">Thất bại</option>
+                                            @elseif($order->payment->status === 'failed')
+                                                <option value="success">Đã thanh toán</option>
+                                            @endif
+                                        </select>
+                                        <button type="submit" class="w-full rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                                            Cập nhật
+                                        </button>
+                                    </form>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
             @endif
 
-            <!-- Shipping Information -->
+            <!-- Shipment Information & Update -->
             @if($order->shipment)
                 <div class="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl">
                     <div class="px-4 py-6 sm:p-8">
-                        <h2 class="text-base font-semibold leading-7 text-gray-900">Thông tin vận chuyển</h2>
+                        <h2 class="text-base font-semibold leading-7 text-gray-900 flex items-center gap-x-2">
+                            <svg class="h-5 w-5 text-orange-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
+                            </svg>
+                            Vận chuyển
+                        </h2>
                         <div class="mt-6 space-y-4">
                             @if($order->shipment->tracking_code)
                                 <div>
@@ -243,9 +275,67 @@
                                 </div>
                             @endif
                             <div>
-                                <dt class="text-sm font-medium text-gray-500">Trạng thái vận chuyển</dt>
-                                <dd class="mt-1 text-sm text-gray-900">{{ $order->shipment->status }}</dd>
+                                <dt class="text-sm font-medium text-gray-500">Trạng thái</dt>
+                                <dd class="mt-2">
+                                    @if($order->shipment->status === 'pending')
+                                        <span class="inline-flex items-center rounded-full bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800">
+                                            Chờ xử lý
+                                        </span>
+                                    @elseif($order->shipment->status === 'processing')
+                                        <span class="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800">
+                                            Đang xử lý
+                                        </span>
+                                    @elseif($order->shipment->status === 'shipped')
+                                        <span class="inline-flex items-center rounded-full bg-purple-100 px-2.5 py-0.5 text-xs font-medium text-purple-800">
+                                            Đang giao
+                                        </span>
+                                    @elseif($order->shipment->status === 'delivered')
+                                        <span class="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800">
+                                            Đã giao
+                                        </span>
+                                    @else
+                                        <span class="inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-800">
+                                            Đã hủy
+                                        </span>
+                                    @endif
+                                </dd>
                             </div>
+
+                            @if($order->shipment->status !== 'delivered' && $order->status !== 'cancelled')
+                                <div class="border-t border-gray-200 pt-4">
+                                    <form method="POST" action="{{ route('seller.orders.update-shipment-status', $order) }}">
+                                        @csrf
+                                        @method('PATCH')
+                                        <label for="shipment_status" class="block text-sm font-medium text-gray-700 mb-2">Cập nhật trạng thái</label>
+                                        <select name="shipment_status" id="shipment_status" required data-tom-select class="block w-full rounded-md border-0 py-2 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm mb-4">
+                                            <option value="">Chọn trạng thái...</option>
+                                            @if($order->shipment->status === 'pending')
+                                                <option value="processing">Đang xử lý</option>
+                                                <option value="cancelled">Hủy đơn</option>
+                                            @elseif($order->shipment->status === 'processing')
+                                                <option value="shipped">Đang giao hàng</option>
+                                                <option value="cancelled">Hủy đơn</option>
+                                            @elseif($order->shipment->status === 'shipped')
+                                                <option value="delivered">Đã giao hàng</option>
+                                                <option value="cancelled">Hủy đơn</option>
+                                            @endif
+                                        </select>
+
+                                        @if($order->shipment->status === 'pending' || $order->shipment->status === 'processing')
+                                            <div class="mb-4">
+                                                <label for="tracking_code" class="block text-sm font-medium text-gray-700 mb-2">Mã vận đơn (tùy chọn)</label>
+                                                <input type="text" name="tracking_code" id="tracking_code" value="{{ $order->shipment->tracking_code }}" 
+                                                       class="block w-full rounded-md border-0 py-2 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
+                                                       placeholder="Nhập mã vận đơn...">
+                                            </div>
+                                        @endif
+
+                                        <button type="submit" class="w-full rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                                            Cập nhật
+                                        </button>
+                                    </form>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>

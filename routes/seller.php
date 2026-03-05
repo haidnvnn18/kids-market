@@ -51,7 +51,8 @@ Route::middleware('seller')->prefix('seller')->name('seller.')->group(function (
     // Order Management
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
-    Route::patch('/orders/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.update-status');
+    Route::patch('/orders/{order}/payment-status', [OrderController::class, 'updatePaymentStatus'])->name('orders.update-payment-status');
+    Route::patch('/orders/{order}/shipment-status', [OrderController::class, 'updateShipmentStatus'])->name('orders.update-shipment-status');
 
     // Review Management
     Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');

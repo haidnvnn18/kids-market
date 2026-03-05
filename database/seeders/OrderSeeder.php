@@ -9,6 +9,7 @@ use App\Models\Shipment;
 use App\Models\User;
 use App\Models\Supplier;
 use App\Models\ProductVariant;
+use App\Models\ShippingAddress;
 use Illuminate\Database\Seeder;
 
 class OrderSeeder extends Seeder
@@ -23,10 +24,20 @@ class OrderSeeder extends Seeder
         $supplier1 = Supplier::first();
         $supplier2 = Supplier::skip(1)->first();
 
+        // Get shipping addresses
+        $shipping1 = ShippingAddress::where('user_id', $buyer1->id)->where('is_default', true)->first();
+        $shipping2 = ShippingAddress::where('user_id', $buyer2->id)->where('is_default', true)->first();
+
         // Order 1: Buyer 1 -> Supplier 1
         $order1 = Order::create([
             'user_id' => $buyer1->id,
             'supplier_id' => $supplier1->id,
+            'shipping_address_id' => $shipping1->id,
+            'shipping_full_name' => $shipping1->full_name,
+            'shipping_phone' => $shipping1->phone,
+            'shipping_address_detail' => $shipping1->address_detail,
+            'shipping_province_id' => $shipping1->province_id,
+            'shipping_district_id' => $shipping1->district_id,
             'total_amount' => 140000,
             'status' => 'completed',
         ]);
@@ -69,6 +80,12 @@ class OrderSeeder extends Seeder
         $order2 = Order::create([
             'user_id' => $buyer2->id,
             'supplier_id' => $supplier2->id,
+            'shipping_address_id' => $shipping2->id,
+            'shipping_full_name' => $shipping2->full_name,
+            'shipping_phone' => $shipping2->phone,
+            'shipping_address_detail' => $shipping2->address_detail,
+            'shipping_province_id' => $shipping2->province_id,
+            'shipping_district_id' => $shipping2->district_id,
             'total_amount' => 530000,
             'status' => 'shipping',
         ]);
@@ -111,6 +128,12 @@ class OrderSeeder extends Seeder
         $order3 = Order::create([
             'user_id' => $buyer1->id,
             'supplier_id' => $supplier2->id,
+            'shipping_address_id' => $shipping1->id,
+            'shipping_full_name' => $shipping1->full_name,
+            'shipping_phone' => $shipping1->phone,
+            'shipping_address_detail' => $shipping1->address_detail,
+            'shipping_province_id' => $shipping1->province_id,
+            'shipping_district_id' => $shipping1->district_id,
             'total_amount' => 360000,
             'status' => 'paid',
         ]);
@@ -153,6 +176,12 @@ class OrderSeeder extends Seeder
         $order4 = Order::create([
             'user_id' => $buyer2->id,
             'supplier_id' => $supplier1->id,
+            'shipping_address_id' => $shipping2->id,
+            'shipping_full_name' => $shipping2->full_name,
+            'shipping_phone' => $shipping2->phone,
+            'shipping_address_detail' => $shipping2->address_detail,
+            'shipping_province_id' => $shipping2->province_id,
+            'shipping_district_id' => $shipping2->district_id,
             'total_amount' => 195000,
             'status' => 'pending',
         ]);

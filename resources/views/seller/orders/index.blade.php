@@ -15,28 +15,82 @@
     <!-- Statistics Cards -->
     <div class="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
         <div class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
-            <dt class="truncate text-sm font-medium text-gray-500">Tổng đơn</dt>
-            <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900">{{ $stats['total'] }}</dd>
+            <div class="flex items-center">
+                <div class="flex-shrink-0">
+                    <svg class="h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z" />
+                    </svg>
+                </div>
+                <div class="ml-3 w-0 flex-1">
+                    <dt class="truncate text-sm font-medium text-gray-500">Tổng đơn</dt>
+                    <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900">{{ $stats['total'] }}</dd>
+                </div>
+            </div>
         </div>
         <div class="overflow-hidden rounded-lg bg-yellow-50 px-4 py-5 shadow sm:p-6">
-            <dt class="truncate text-sm font-medium text-yellow-800">Chờ xử lý</dt>
-            <dd class="mt-1 text-3xl font-semibold tracking-tight text-yellow-900">{{ $stats['pending'] }}</dd>
+            <div class="flex items-center">
+                <div class="flex-shrink-0">
+                    <svg class="h-8 w-8 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                <div class="ml-3 w-0 flex-1">
+                    <dt class="truncate text-sm font-medium text-yellow-800">Chờ xử lý</dt>
+                    <dd class="mt-1 text-3xl font-semibold tracking-tight text-yellow-900">{{ $stats['pending'] }}</dd>
+                </div>
+            </div>
         </div>
         <div class="overflow-hidden rounded-lg bg-blue-50 px-4 py-5 shadow sm:p-6">
-            <dt class="truncate text-sm font-medium text-blue-800">Đã thanh toán</dt>
-            <dd class="mt-1 text-3xl font-semibold tracking-tight text-blue-900">{{ $stats['paid'] }}</dd>
+            <div class="flex items-center">
+                <div class="flex-shrink-0">
+                    <svg class="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" />
+                    </svg>
+                </div>
+                <div class="ml-3 w-0 flex-1">
+                    <dt class="truncate text-sm font-medium text-blue-800">Đã thanh toán</dt>
+                    <dd class="mt-1 text-3xl font-semibold tracking-tight text-blue-900">{{ $stats['paid'] }}</dd>
+                </div>
+            </div>
         </div>
         <div class="overflow-hidden rounded-lg bg-purple-50 px-4 py-5 shadow sm:p-6">
-            <dt class="truncate text-sm font-medium text-purple-800">Đang giao</dt>
-            <dd class="mt-1 text-3xl font-semibold tracking-tight text-purple-900">{{ $stats['shipping'] }}</dd>
+            <div class="flex items-center">
+                <div class="flex-shrink-0">
+                    <svg class="h-8 w-8 text-purple-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
+                    </svg>
+                </div>
+                <div class="ml-3 w-0 flex-1">
+                    <dt class="truncate text-sm font-medium text-purple-800">Đang giao</dt>
+                    <dd class="mt-1 text-3xl font-semibold tracking-tight text-purple-900">{{ $stats['shipping'] }}</dd>
+                </div>
+            </div>
         </div>
         <div class="overflow-hidden rounded-lg bg-green-50 px-4 py-5 shadow sm:p-6">
-            <dt class="truncate text-sm font-medium text-green-800">Hoàn thành</dt>
-            <dd class="mt-1 text-3xl font-semibold tracking-tight text-green-900">{{ $stats['completed'] }}</dd>
+            <div class="flex items-center">
+                <div class="flex-shrink-0">
+                    <svg class="h-8 w-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                <div class="ml-3 w-0 flex-1">
+                    <dt class="truncate text-sm font-medium text-green-800">Hoàn thành</dt>
+                    <dd class="mt-1 text-3xl font-semibold tracking-tight text-green-900">{{ $stats['completed'] }}</dd>
+                </div>
+            </div>
         </div>
         <div class="overflow-hidden rounded-lg bg-red-50 px-4 py-5 shadow sm:p-6">
-            <dt class="truncate text-sm font-medium text-red-800">Đã hủy</dt>
-            <dd class="mt-1 text-3xl font-semibold tracking-tight text-red-900">{{ $stats['cancelled'] }}</dd>
+            <div class="flex items-center">
+                <div class="flex-shrink-0">
+                    <svg class="h-8 w-8 text-red-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                <div class="ml-3 w-0 flex-1">
+                    <dt class="truncate text-sm font-medium text-red-800">Đã hủy</dt>
+                    <dd class="mt-1 text-3xl font-semibold tracking-tight text-red-900">{{ $stats['cancelled'] }}</dd>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -76,21 +130,6 @@
             </div>
         </form>
     </div>
-
-    @if(session('success'))
-        <div class="mt-4 rounded-md bg-green-50 p-4">
-            <div class="flex">
-                <div class="flex-shrink-0">
-                    <svg class="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd" />
-                    </svg>
-                </div>
-                <div class="ml-3">
-                    <p class="text-sm font-medium text-green-800">{{ session('success') }}</p>
-                </div>
-            </div>
-        </div>
-    @endif
 
     <!-- Orders Table -->
     <div class="mt-8 flow-root">

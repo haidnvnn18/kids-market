@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             ProvinceSeeder::class,
             DistrictSeeder::class,
             UserSeeder::class,
+            ShippingAddressSeeder::class,
             SupplierSeeder::class,
             CategorySeeder::class,
             ProductSeeder::class,

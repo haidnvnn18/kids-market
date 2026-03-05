@@ -64,13 +64,20 @@ class OrderController extends Controller
         }
 
         $order = Order::where('supplier_id', $supplier->id)
-            ->with(['user', 'items.productVariant.product.images', 'payment', 'shipment'])
+            ->with([
+                'user', 
+                'items.productVariant.product.images', 
+                'payment', 
+                'shipment',
+                'shippingProvince',
+                'shippingDistrict'
+            ])
             ->findOrFail($id);
 
         return view('seller.orders.show', compact('order'));
     }
 
-    public function updateStatus(Request $request, $id)
+    public function updatePaymentStatus(Request $request, $id)
     {
         $user = Auth::user();
         $supplier = $user->supplier;
@@ -79,33 +86,114 @@ class OrderController extends Controller
             abort(403, 'Bạn không có quyền truy cập.');
         }
 
-        $order = Order::where('supplier_id', $supplier->id)->findOrFail($id);
+        $order = Order::where('supplier_id', $supplier->id)
+            ->with('payment')
+            ->findOrFail($id);
+
+        if (!$order->payment) {
+            return back()->withErrors([
+                'payment_status' => 'Đơn hàng không có thông tin thanh toán.'
+            ]);
+        }
 
         $request->validate([
-            'status' => ['required', 'in:pending,paid,shipping,completed,cancelled'],
+            'payment_status' => ['required', 'in:pending,success,failed'],
         ]);
 
-        $oldStatus = $order->status;
-        $newStatus = $request->status;
+        $oldStatus = $order->payment->status;
+        $newStatus = $request->payment_status;
 
         // Validate status transitions
         $allowedTransitions = [
-            'pending' => ['paid', 'cancelled'],
-            'paid' => ['shipping', 'cancelled'],
-            'shipping' => ['completed', 'cancelled'],
-            'completed' => [],
+            'pending' => ['success', 'failed'],
+            'failed' => ['success'],
+            'success' => [],
+        ];
+
+        if (!in_array($newStatus, $allowedTransitions[$oldStatus])) {
+            return back()->withErrors([
+                'payment_status' => "Không thể chuyển trạng thái thanh toán từ '{$oldStatus}' sang '{$newStatus}'."
+            ]);
+        }
+
+        // Update payment status
+        $order->payment->update([
+            'status' => $newStatus,
+            'paid_at' => $newStatus === 'success' ? now() : null,
+        ]);
+
+        // Update order status based on payment status
+        if ($newStatus === 'success' && $order->status === 'pending') {
+            $order->update(['status' => 'paid']);
+        }
+
+        return redirect()->route('seller.orders.show', $order->id)
+            ->with('success', 'Cập nhật trạng thái thanh toán thành công!');
+    }
+
+    public function updateShipmentStatus(Request $request, $id)
+    {
+        $user = Auth::user();
+        $supplier = $user->supplier;
+
+        if (!$supplier) {
+            abort(403, 'Bạn không có quyền truy cập.');
+        }
+
+        $order = Order::where('supplier_id', $supplier->id)
+            ->with('shipment')
+            ->findOrFail($id);
+
+        if (!$order->shipment) {
+            return back()->withErrors([
+                'shipment_status' => 'Đơn hàng không có thông tin vận chuyển.'
+            ]);
+        }
+
+        $request->validate([
+            'shipment_status' => ['required', 'in:pending,processing,shipped,delivered,cancelled'],
+            'tracking_code' => ['nullable', 'string', 'max:255'],
+        ]);
+
+        $oldStatus = $order->shipment->status;
+        $newStatus = $request->shipment_status;
+
+        // Validate status transitions
+        $allowedTransitions = [
+            'pending' => ['processing', 'cancelled'],
+            'processing' => ['shipped', 'cancelled'],
+            'shipped' => ['delivered', 'cancelled'],
+            'delivered' => [],
             'cancelled' => [],
         ];
 
         if (!in_array($newStatus, $allowedTransitions[$oldStatus])) {
             return back()->withErrors([
-                'status' => "Không thể chuyển trạng thái từ '{$oldStatus}' sang '{$newStatus}'."
+                'shipment_status' => "Không thể chuyển trạng thái vận chuyển từ '{$oldStatus}' sang '{$newStatus}'."
             ]);
         }
 
-        $order->update(['status' => $newStatus]);
+        // Update shipment status
+        $updateData = ['status' => $newStatus];
+        
+        if ($request->filled('tracking_code')) {
+            $updateData['tracking_code'] = $request->tracking_code;
+        }
+
+        $order->shipment->update($updateData);
+
+        // Update order status based on shipment status
+        if ($newStatus === 'processing' || $newStatus === 'shipped') {
+            if ($order->status === 'paid' || $order->status === 'pending') {
+                $order->update(['status' => 'shipping']);
+            }
+        } elseif ($newStatus === 'delivered') {
+            $order->update(['status' => 'completed']);
+        } elseif ($newStatus === 'cancelled') {
+            $order->update(['status' => 'cancelled']);
+        }
 
         return redirect()->route('seller.orders.show', $order->id)
-            ->with('success', 'Cập nhật trạng thái đơn hàng thành công!');
+            ->with('success', 'Cập nhật trạng thái vận chuyển thành công!');
     }
 }
