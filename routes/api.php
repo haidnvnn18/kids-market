@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\CartController;
+use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ReviewController;
 use App\Http\Controllers\Api\ShopController;
 use App\Http\Controllers\Api\ProvinceController;
@@ -30,6 +31,11 @@ Route::post('/products/{id}/reviews', [ReviewController::class, 'store'])->middl
 // Cart routes
 Route::get('/cart', [CartController::class, 'index'])->middleware('auth.token');
 Route::post('/cart', [CartController::class, 'store'])->middleware('auth.token');
+
+// Order routes
+Route::middleware('auth.token')->group(function () {
+    Route::post('/orders', [OrderController::class, 'store']);
+});
 
 // Shop routes
 Route::get('/shops/{id}', [ShopController::class, 'show']);

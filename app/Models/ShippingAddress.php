@@ -37,4 +37,9 @@ class ShippingAddress extends Model
     {
         return $this->belongsTo(District::class);
     }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }

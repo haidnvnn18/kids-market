@@ -12,8 +12,14 @@ class Order extends Model
     protected $fillable = [
         'user_id',
         'supplier_id',
+        'shipping_address_id',
         'total_amount',
         'status',
+        'shipping_full_name',
+        'shipping_phone',
+        'shipping_address_detail',
+        'shipping_province_id',
+        'shipping_district_id',
     ];
 
     public function user()
@@ -39,5 +45,20 @@ class Order extends Model
     public function shipment()
     {
         return $this->hasOne(Shipment::class);
+    }
+
+    public function shippingAddress()
+    {
+        return $this->belongsTo(ShippingAddress::class);
+    }
+
+    public function shippingProvince()
+    {
+        return $this->belongsTo(Province::class, 'shipping_province_id');
+    }
+
+    public function shippingDistrict()
+    {
+        return $this->belongsTo(District::class, 'shipping_district_id');
     }
 }
