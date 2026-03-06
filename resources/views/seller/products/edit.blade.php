@@ -122,7 +122,7 @@
                                 <!-- Stock -->
                                 <div class="sm:col-span-2">
                                     <label class="block text-sm font-medium text-gray-700">Tồn kho <span class="text-red-500">*</span></label>
-                                    <input type="number" name="variants[{{ $index }}][stock]" value="{{ $variant->stock_quantity }}" required min="0" class="mt-1 block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm">
+                                    <input type="number" name="variants[{{ $index }}][stock]" value="{{ $variant->stock }}" required min="0" class="mt-1 block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm">
                                 </div>
 
                                 <!-- Remove Button -->
