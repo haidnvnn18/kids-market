@@ -17,6 +17,153 @@ use Illuminate\Support\Facades\DB;
 class OrderController extends Controller
 {
     /**
+     * Get user orders list
+     */
+    public function index(\Illuminate\Http\Request $request): JsonResponse
+    {
+        try {
+            $user = $request->attributes->get('auth_user');
+
+            $query = Order::where('user_id', $user->id)
+                ->with([
+                    'items.productVariant.product.images',
+                    'payment',
+                    'shipment',
+                    'supplier',
+                ])
+                ->latest();
+
+            if ($request->filled('status')) {
+                $query->where('status', $request->status);
+            }
+
+            if ($request->filled('from_date')) {
+                $query->whereDate('created_at', '>=', $request->from_date);
+            }
+
+            if ($request->filled('to_date')) {
+                $query->whereDate('created_at', '<=', $request->to_date);
+            }
+
+            if ($request->filled('order_id')) {
+                $query->where('id', 'like', '%' . $request->order_id . '%');
+            }
+
+            if ($request->filled('keyword')) {
+                $keyword = $request->keyword;
+                $query->where(function ($q) use ($keyword) {
+                    $q->where('id', 'like', '%' . $keyword . '%')
+                        ->orWhereHas('items.productVariant.product', function ($productQuery) use ($keyword) {
+                            $productQuery->where('name', 'like', '%' . $keyword . '%');
+                        });
+                });
+            }
+
+            $perPage = (int) $request->query('per_page', 10);
+            $perPage = max(1, min($perPage, 50));
+
+            $orders = $query->paginate($perPage)->appends($request->query());
+
+            return response()->json([
+                'success' => true,
+                'data' => $orders,
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Lỗi khi lấy danh sách đơn hàng',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    /**
+     * Get order details by id
+     */
+    public function show(\Illuminate\Http\Request $request, int $id): JsonResponse
+    {
+        try {
+            $user = $request->attributes->get('auth_user');
+
+            $order = Order::where('id', $id)
+                ->where('user_id', $user->id)
+                ->with([
+                    'items.productVariant.product.images',
+                    'payment',
+                    'shipment',
+                    'shippingAddress.province',
+                    'shippingAddress.district',
+                    'shippingProvince',
+                    'shippingDistrict',
+                    'supplier',
+                ])
+                ->first();
+
+            if (!$order) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Đơn hàng không tồn tại',
+                ], 404);
+            }
+
+            return response()->json([
+                'success' => true,
+                'data' => $order,
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Lỗi khi lấy thông tin đơn hàng',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    /**
+     * Cancel order by id
+     */
+    public function cancel(\Illuminate\Http\Request $request, int $id): JsonResponse
+    {
+        try {
+            $user = $request->attributes->get('auth_user');
+
+            $order = Order::where('id', $id)
+                ->where('user_id', $user->id)
+                ->first();
+
+            if (!$order) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Đơn hàng không tồn tại',
+                ], 404);
+            }
+
+            if (!in_array($order->status, ['pending', 'paid'])) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Chỉ có thể hủy đơn ở trạng thái Chờ xử lý hoặc Đã thanh toán',
+                ], 422);
+            }
+
+            $order->update([
+                'status' => 'cancelled',
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Hủy đơn hàng thành công',
+                'data' => $order,
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Lỗi khi hủy đơn hàng',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    /**
      * Create a new order from items
      */
     public function store(OrderRequest $request): JsonResponse
