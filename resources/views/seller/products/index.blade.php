@@ -36,9 +36,19 @@
                     <select name="category_id" id="category_id" data-tom-select placeholder="Tất cả danh mục" class="mt-1 block w-full rounded-md border-0 py-2 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm">
                         <option value="">Tất cả danh mục</option>
                         @foreach($categories as $category)
-                            <option value="{{ $category->id }}" {{ request('category_id') == $category->id ? 'selected' : '' }}>
-                                {{ $category->name }}
-                            </option>
+                            @if($category->children->isNotEmpty())
+                                <optgroup label="{{ $category->name }}">
+                                    @foreach($category->children as $child)
+                                        <option value="{{ $child->id }}" {{ request('category_id') == $child->id ? 'selected' : '' }}>
+                                            {{ $child->name }}
+                                        </option>
+                                    @endforeach
+                                </optgroup>
+                            @else
+                                <option value="{{ $category->id }}" {{ request('category_id') == $category->id ? 'selected' : '' }}>
+                                    {{ $category->name }}
+                                </option>
+                            @endif
                         @endforeach
                     </select>
                 </div>
