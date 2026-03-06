@@ -37,7 +37,7 @@
                                 <li class="flex py-6">
                                     <div class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                         @if($item->productVariant->product->images->first())
-                                            <img src="{{ asset('storage/' . $item->productVariant->product->images->first()->image_url) }}" 
+                                            <img src="{{ $item->productVariant->product->images->first()->image_url }}" 
                                                  alt="{{ $item->productVariant->product->name }}" 
                                                  class="h-full w-full object-cover object-center">
                                         @else

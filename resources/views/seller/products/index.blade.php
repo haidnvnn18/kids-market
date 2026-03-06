@@ -92,7 +92,7 @@
                                         <div class="flex items-center">
                                             <div class="h-16 w-16 flex-shrink-0">
                                                 @if($product->images->first())
-                                                    <img class="h-16 w-16 rounded object-cover" src="{{ asset('storage/' . $product->images->first()->image_url) }}" alt="{{ $product->name }}">
+                                                    <img class="h-16 w-16 rounded object-cover" src="{{ asset($product->images->first()->image_url) }}" alt="{{ $product->name }}">
                                                 @else
                                                     <div class="h-16 w-16 rounded bg-gray-100 flex items-center justify-center">
                                                         <svg class="h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">

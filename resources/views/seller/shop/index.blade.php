@@ -20,7 +20,7 @@
 <div class="overflow-hidden rounded-lg bg-white shadow mb-6">
     <div class="relative h-64 w-full bg-gradient-to-r from-indigo-500 to-purple-600">
         @if($supplier->banner)
-            <img src="{{ asset('storage/' . $supplier->banner) }}" alt="Banner" class="h-full w-full object-cover">
+            <img src="{{ $supplier->banner }}" alt="Banner" class="h-full w-full object-cover">
         @else
             <div class="flex h-full items-center justify-center">
                 <div class="text-center text-white">
@@ -38,7 +38,7 @@
         <div class="-mt-16 mb-6 flex items-end">
             <div class="relative">
                 @if($supplier->avatar)
-                    <img src="{{ asset('storage/' . $supplier->avatar) }}" alt="{{ $supplier->brand_name }}" class="h-32 w-32 rounded-full border-4 border-white bg-white object-cover shadow-lg">
+                    <img src="{{ $supplier->avatar }}" alt="{{ $supplier->brand_name }}" class="h-32 w-32 rounded-full border-4 border-white bg-white object-cover shadow-lg">
                 @else
                     <div class="h-32 w-32 rounded-full border-4 border-white bg-gradient-to-br from-indigo-500 to-purple-600 shadow-lg flex items-center justify-center">
                         <span class="text-4xl font-bold text-white">{{ substr($supplier->brand_name, 0, 1) }}</span>

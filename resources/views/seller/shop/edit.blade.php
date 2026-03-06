@@ -32,7 +32,7 @@
                 <!-- Current Banner Preview -->
                 @if($supplier->banner)
                 <div class="relative">
-                    <img src="{{ asset('storage/' . $supplier->banner) }}" alt="Current Banner" class="h-48 w-full rounded-lg object-cover" id="current-banner">
+                    <img src="{{ $supplier->banner }}" alt="Current Banner" class="h-48 w-full rounded-lg object-cover" id="current-banner">
                     <div class="mt-3 flex gap-x-3">
                         <button type="button" onclick="document.getElementById('banner-delete-form').submit()" class="inline-flex items-center gap-x-2 rounded-md bg-red-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500">
                             <svg class="-ml-0.5 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -81,7 +81,7 @@
                 <!-- Current Avatar -->
                 <div class="flex-shrink-0">
                     @if($supplier->avatar)
-                        <img src="{{ asset('storage/' . $supplier->avatar) }}" alt="Current Avatar" class="h-32 w-32 rounded-full object-cover" id="current-avatar">
+                        <img src="{{ $supplier->avatar }}" alt="Current Avatar" class="h-32 w-32 rounded-full object-cover" id="current-avatar">
                     @else
                         <div class="h-32 w-32 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
                             <span class="text-4xl font-bold text-white">{{ substr($supplier->brand_name, 0, 1) }}</span>

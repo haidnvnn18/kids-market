@@ -150,7 +150,7 @@
                     <div class="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-5">
                         @foreach($product->images as $index => $image)
                             <div class="relative group">
-                                <img src="{{ asset('storage/' . $image->image_url) }}" alt="{{ $product->name }}" class="h-32 w-full object-cover rounded-lg">
+                                <img src="{{ asset($image->image_url) }}" alt="{{ $product->name }}" class="h-32 w-full object-cover rounded-lg">
                                 @if($index === 0)
                                     <span class="absolute top-2 left-2 bg-indigo-600 text-white text-xs px-2 py-1 rounded">Ảnh chính</span>
                                 @endif

@@ -54,6 +54,17 @@ class User extends Authenticatable
         ];
     }
 
+    public function getAvatarAttribute(?string $value): ?string
+    {
+        if (!$value) {
+            return null;
+        }
+        if (str_starts_with($value, 'http://') || str_starts_with($value, 'https://')) {
+            return $value;
+        }
+        return \Illuminate\Support\Facades\Storage::url($value);
+    }
+
     public function supplier()
     {
         return $this->hasOne(Supplier::class);

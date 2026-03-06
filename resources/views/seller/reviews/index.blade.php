@@ -119,7 +119,7 @@
                         <!-- Product Info -->
                         <div class="flex-shrink-0">
                             @if($review->product->images->first())
-                                <img src="{{ asset('storage/' . $review->product->images->first()->image_path) }}" 
+                                <img src="{{ $review->product->images->first()->image_url }}" 
                                     alt="{{ $review->product->name }}" 
                                     class="h-20 w-20 rounded-lg object-cover">
                             @else
