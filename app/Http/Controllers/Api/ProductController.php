@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\ProductLike;
 use App\Models\ProductView;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
@@ -75,7 +76,17 @@ class ProductController extends Controller
             // Pagination
             $perPage = $request->query('per_page', 10);
             $products = $query->with(['supplier', 'category', 'variants', 'images'])
+                ->withCount('views')
+                ->withCount('likes')
+                ->withSum('completedOrderItems', 'quantity')
                 ->paginate($perPage);
+
+            // Rename sum field for clarity
+            $products->getCollection()->transform(function ($product) {
+                $product->sold_count = (int) ($product->completed_order_items_sum_quantity ?? 0);
+                unset($product->completed_order_items_sum_quantity);
+                return $product;
+            });
 
             return response()->json([
                 'success' => true,
@@ -94,11 +105,23 @@ class ProductController extends Controller
     /**
      * Get single product detail
      */
-    public function show($id): JsonResponse
+    public function show(Request $request, $id): JsonResponse
     {
         try {
+            $user = $request->attributes->get('auth_user');
+
             $product = Product::with(['supplier', 'category', 'variants', 'images'])
+                ->withCount('views')
+                ->withCount('likes')
+                ->withSum('completedOrderItems', 'quantity')
                 ->findOrFail($id);
+
+            $product->sold_count = (int) ($product->completed_order_items_sum_quantity ?? 0);
+            unset($product->completed_order_items_sum_quantity);
+
+            $product->is_liked = $user
+                ? ProductLike::where('user_id', $user->id)->where('product_id', $id)->exists()
+                : false;
 
             return response()->json([
                 'success' => true,
@@ -111,6 +134,60 @@ class ProductController extends Controller
                 'message' => 'Sản phẩm không tìm thấy',
                 'error' => $e->getMessage()
             ], 404);
+        }
+    }
+
+    /**
+     * Toggle like/unlike a product for the authenticated user
+     */
+    public function toggleLike(Request $request, $id): JsonResponse
+    {
+        try {
+            $user = $request->attributes->get('auth_user');
+
+            if (!$user) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Vui lòng đăng nhập để thích sản phẩm'
+                ], 401);
+            }
+
+            $product = Product::findOrFail($id);
+
+            $like = ProductLike::where('user_id', $user->id)
+                ->where('product_id', $id)
+                ->first();
+
+            if ($like) {
+                $like->delete();
+                $liked = false;
+                $message = 'Đã bỏ thích sản phẩm';
+            } else {
+                ProductLike::create([
+                    'user_id' => $user->id,
+                    'product_id' => $id,
+                ]);
+                $liked = true;
+                $message = 'Đã thích sản phẩm';
+            }
+
+            $likesCount = ProductLike::where('product_id', $id)->count();
+
+            return response()->json([
+                'success' => true,
+                'message' => $message,
+                'data' => [
+                    'is_liked' => $liked,
+                    'likes_count' => $likesCount,
+                ]
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Lỗi khi thực hiện thao tác thích sản phẩm',
+                'error' => $e->getMessage()
+            ], 500);
         }
     }
 

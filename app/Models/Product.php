@@ -42,6 +42,22 @@ class Product extends Model
         return $this->hasMany(ProductView::class);
     }
 
+    public function likes()
+    {
+        return $this->hasMany(ProductLike::class);
+    }
+
+    public function orderItems()
+    {
+        return $this->hasManyThrough(OrderItem::class, ProductVariant::class, 'product_id', 'product_variant_id');
+    }
+
+    public function completedOrderItems()
+    {
+        return $this->hasManyThrough(OrderItem::class, ProductVariant::class, 'product_id', 'product_variant_id')
+            ->whereHas('order', fn($q) => $q->where('status', 'completed'));
+    }
+
     public function reviews()
     {
         return $this->hasMany(Review::class);
