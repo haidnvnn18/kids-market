@@ -19,9 +19,6 @@ return new class extends Migration
             $table->string('name');
             $table->text('description')->nullable();
 
-            $table->decimal('wholesale_price', 12, 2);
-            $table->unsignedInteger('min_quantity')->default(1);
-
             $table->enum('status', ['active', 'hidden'])->default('active');
 
             $table->timestamps();

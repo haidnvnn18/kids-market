@@ -57,8 +57,6 @@ class ProductController extends Controller
             'category_id' => ['required', 'exists:categories,id'],
             'name' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
-            'wholesale_price' => ['required', 'numeric', 'min:0'],
-            'min_quantity' => ['required', 'integer', 'min:1'],
             'status' => ['required', 'in:active,hidden'],
             
             // Variants
@@ -67,6 +65,8 @@ class ProductController extends Controller
             'variants.*.color' => ['nullable', 'string', 'max:50'],
             'variants.*.size' => ['nullable', 'string', 'max:50'],
             'variants.*.price' => ['required', 'numeric', 'min:0'],
+            'variants.*.wholesale_price' => ['required', 'numeric', 'min:0'],
+            'variants.*.min_quantity' => ['required', 'integer', 'min:1'],
             'variants.*.stock' => ['required', 'integer', 'min:0'],
             
             // Images
@@ -82,8 +82,6 @@ class ProductController extends Controller
                 'category_id' => $validated['category_id'],
                 'name' => $validated['name'],
                 'description' => $validated['description'] ?? null,
-                'wholesale_price' => $validated['wholesale_price'],
-                'min_quantity' => $validated['min_quantity'],
                 'status' => $validated['status'],
             ]);
 
@@ -95,6 +93,8 @@ class ProductController extends Controller
                     'color' => $variantData['color'] ?? null,
                     'size' => $variantData['size'] ?? null,
                     'price' => $variantData['price'],
+                    'wholesale_price' => $variantData['wholesale_price'],
+                    'min_quantity' => $variantData['min_quantity'],
                     'stock' => $variantData['stock'],
                 ]);
             }
@@ -145,8 +145,6 @@ class ProductController extends Controller
             'category_id' => ['required', 'exists:categories,id'],
             'name' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
-            'wholesale_price' => ['required', 'numeric', 'min:0'],
-            'min_quantity' => ['required', 'integer', 'min:1'],
             'status' => ['required', 'in:active,hidden'],
             
             // Variants
@@ -156,6 +154,8 @@ class ProductController extends Controller
             'variants.*.color' => ['nullable', 'string', 'max:50'],
             'variants.*.size' => ['nullable', 'string', 'max:50'],
             'variants.*.price' => ['required', 'numeric', 'min:0'],
+            'variants.*.wholesale_price' => ['required', 'numeric', 'min:0'],
+            'variants.*.min_quantity' => ['required', 'integer', 'min:1'],
             'variants.*.stock' => ['required', 'integer', 'min:0'],
             
             // Images
@@ -170,8 +170,6 @@ class ProductController extends Controller
                 'category_id' => $validated['category_id'],
                 'name' => $validated['name'],
                 'description' => $validated['description'] ?? null,
-                'wholesale_price' => $validated['wholesale_price'],
-                'min_quantity' => $validated['min_quantity'],
                 'status' => $validated['status'],
             ]);
 
@@ -187,6 +185,8 @@ class ProductController extends Controller
                             'color' => $variantData['color'] ?? null,
                             'size' => $variantData['size'] ?? null,
                             'price' => $variantData['price'],
+                            'wholesale_price' => $variantData['wholesale_price'],
+                            'min_quantity' => $variantData['min_quantity'],
                             'stock' => $variantData['stock'],
                         ]);
                         $existingVariantIds[] = $variant->id;
@@ -199,6 +199,8 @@ class ProductController extends Controller
                         'color' => $variantData['color'] ?? null,
                         'size' => $variantData['size'] ?? null,
                         'price' => $variantData['price'],
+                        'wholesale_price' => $variantData['wholesale_price'],
+                        'min_quantity' => $variantData['min_quantity'],
                         'stock' => $variantData['stock'],
                     ]);
                     $existingVariantIds[] = $variant->id;

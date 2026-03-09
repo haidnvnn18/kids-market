@@ -65,18 +65,6 @@
                         </select>
                     </div>
 
-                    <!-- Wholesale Price -->
-                    <div class="sm:col-span-3">
-                        <label for="wholesale_price" class="block text-sm font-medium leading-6 text-gray-900">Giá sỉ <span class="text-red-500">*</span></label>
-                        <input type="number" name="wholesale_price" id="wholesale_price" value="{{ old('wholesale_price') }}" required min="0" step="0.01" class="mt-2 block w-full rounded-md border-0 py-2 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                    </div>
-
-                    <!-- Min Quantity -->
-                    <div class="sm:col-span-3">
-                        <label for="min_quantity" class="block text-sm font-medium leading-6 text-gray-900">Số lượng tối thiểu <span class="text-red-500">*</span></label>
-                        <input type="number" name="min_quantity" id="min_quantity" value="{{ old('min_quantity', 1) }}" required min="1" class="mt-2 block w-full rounded-md border-0 py-2 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                    </div>
-
                     <!-- Description -->
                     <div class="col-span-full">
                         <label for="description" class="block text-sm font-medium leading-6 text-gray-900">Mô tả</label>
@@ -104,27 +92,39 @@
                     <div class="variant-row border border-gray-200 rounded-lg p-4">
                         <div class="grid grid-cols-1 gap-4 sm:grid-cols-12">
                             <!-- SKU -->
-                            <div class="sm:col-span-3">
+                            <div class="sm:col-span-2">
                                 <label class="block text-sm font-medium text-gray-700">SKU <span class="text-red-500">*</span></label>
                                 <input type="text" name="variants[0][sku]" required class="mt-1 block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm">
                             </div>
 
                             <!-- Color -->
-                            <div class="sm:col-span-2">
+                            <div class="sm:col-span-1">
                                 <label class="block text-sm font-medium text-gray-700">Màu sắc</label>
                                 <input type="text" name="variants[0][color]" class="mt-1 block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm">
                             </div>
 
                             <!-- Size -->
-                            <div class="sm:col-span-2">
+                            <div class="sm:col-span-1">
                                 <label class="block text-sm font-medium text-gray-700">Kích thước</label>
                                 <input type="text" name="variants[0][size]" class="mt-1 block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm">
                             </div>
 
                             <!-- Price -->
                             <div class="sm:col-span-2">
-                                <label class="block text-sm font-medium text-gray-700">Giá <span class="text-red-500">*</span></label>
+                                <label class="block text-sm font-medium text-gray-700">Giá lẻ <span class="text-red-500">*</span></label>
                                 <input type="number" name="variants[0][price]" required min="0" step="0.01" class="mt-1 block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm">
+                            </div>
+
+                            <!-- Wholesale Price -->
+                            <div class="sm:col-span-2">
+                                <label class="block text-sm font-medium text-gray-700">Giá sỉ <span class="text-red-500">*</span></label>
+                                <input type="number" name="variants[0][wholesale_price]" required min="0" step="0.01" class="mt-1 block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm">
+                            </div>
+
+                            <!-- Min Quantity -->
+                            <div class="sm:col-span-1">
+                                <label class="block text-sm font-medium text-gray-700">SL giá sỉ <span class="text-red-500">*</span></label>
+                                <input type="number" name="variants[0][min_quantity]" required min="1" value="1" class="mt-1 block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm">
                             </div>
 
                             <!-- Stock -->
@@ -145,7 +145,7 @@
                     </div>
                 </div>
 
-                <p class="mt-4 text-sm text-gray-500">* Mỗi phân loại cần có SKU, giá và số lượng tồn kho riêng. Màu sắc và kích thước là tùy chọn.</p>
+                <p class="mt-4 text-sm text-gray-500">* Mỗi phân loại cần có SKU, giá lẻ, giá sỉ, số lượng tối thiểu để áp giá sỉ và tồn kho riêng. Màu sắc và kích thước là tùy chọn.</p>
             </div>
         </div>
 
@@ -183,27 +183,39 @@ function addVariant() {
         <div class="variant-row border border-gray-200 rounded-lg p-4">
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-12">
                 <!-- SKU -->
-                <div class="sm:col-span-3">
+                <div class="sm:col-span-2">
                     <label class="block text-sm font-medium text-gray-700">SKU <span class="text-red-500">*</span></label>
-                    <input type=\"text\" name=\"variants[${variantIndex}][sku]\" required class=\"mt-1 block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm\">
+                    <input type="text" name="variants[${variantIndex}][sku]" required class="mt-1 block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm">
                 </div>
 
                 <!-- Color -->
-                <div class="sm:col-span-2">
+                <div class="sm:col-span-1">
                     <label class="block text-sm font-medium text-gray-700">Màu sắc</label>
                     <input type="text" name="variants[${variantIndex}][color]" class="mt-1 block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm">
                 </div>
 
                 <!-- Size -->
-                <div class="sm:col-span-2">
+                <div class="sm:col-span-1">
                     <label class="block text-sm font-medium text-gray-700">Kích thước</label>
                     <input type="text" name="variants[${variantIndex}][size]" class="mt-1 block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm">
                 </div>
 
                 <!-- Price -->
                 <div class="sm:col-span-2">
-                    <label class="block text-sm font-medium text-gray-700">Giá <span class="text-red-500">*</span></label>
+                    <label class="block text-sm font-medium text-gray-700">Giá lẻ <span class="text-red-500">*</span></label>
                     <input type="number" name="variants[${variantIndex}][price]" required min="0" step="0.01" class="mt-1 block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm">
+                </div>
+
+                <!-- Wholesale Price -->
+                <div class="sm:col-span-2">
+                    <label class="block text-sm font-medium text-gray-700">Giá sỉ <span class="text-red-500">*</span></label>
+                    <input type="number" name="variants[${variantIndex}][wholesale_price]" required min="0" step="0.01" class="mt-1 block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm">
+                </div>
+
+                <!-- Min Quantity -->
+                <div class="sm:col-span-1">
+                    <label class="block text-sm font-medium text-gray-700">SL giá sỉ <span class="text-red-500">*</span></label>
+                    <input type="number" name="variants[${variantIndex}][min_quantity]" required min="1" value="1" class="mt-1 block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm">
                 </div>
 
                 <!-- Stock -->

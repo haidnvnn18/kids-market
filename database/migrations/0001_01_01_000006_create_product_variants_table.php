@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('size')->nullable();
 
             $table->decimal('price', 12, 2);
+            $table->decimal('wholesale_price', 12, 2);
+            $table->unsignedInteger('min_quantity')->default(1);
             $table->unsignedInteger('stock')->default(0);
 
             $table->timestamps();

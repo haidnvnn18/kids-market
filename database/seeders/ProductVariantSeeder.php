@@ -21,6 +21,8 @@ class ProductVariantSeeder extends Seeder
             'color' => 'Đỏ',
             'size' => 'S',
             'price' => 35000,
+            'wholesale_price' => 25000,
+            'min_quantity' => 10,
             'stock' => 50,
         ]);
         ProductVariant::create([
@@ -29,6 +31,8 @@ class ProductVariantSeeder extends Seeder
             'color' => 'Đỏ',
             'size' => 'M',
             'price' => 35000,
+            'wholesale_price' => 25000,
+            'min_quantity' => 10,
             'stock' => 45,
         ]);
         ProductVariant::create([
@@ -37,6 +41,8 @@ class ProductVariantSeeder extends Seeder
             'color' => 'Xanh',
             'size' => 'S',
             'price' => 35000,
+            'wholesale_price' => 25000,
+            'min_quantity' => 10,
             'stock' => 60,
         ]);
         ProductVariant::create([
@@ -45,6 +51,8 @@ class ProductVariantSeeder extends Seeder
             'color' => 'Xanh',
             'size' => 'M',
             'price' => 35000,
+            'wholesale_price' => 25000,
+            'min_quantity' => 10,
             'stock' => 55,
         ]);
 
@@ -56,6 +64,8 @@ class ProductVariantSeeder extends Seeder
             'color' => 'Trắng',
             'size' => 'S',
             'price' => 50000,
+            'wholesale_price' => 35000,
+            'min_quantity' => 5,
             'stock' => 30,
         ]);
         ProductVariant::create([
@@ -64,6 +74,8 @@ class ProductVariantSeeder extends Seeder
             'color' => 'Trắng',
             'size' => 'M',
             'price' => 50000,
+            'wholesale_price' => 35000,
+            'min_quantity' => 5,
             'stock' => 35,
         ]);
 
@@ -75,6 +87,8 @@ class ProductVariantSeeder extends Seeder
             'color' => 'Be',
             'size' => 'S',
             'price' => 65000,
+            'wholesale_price' => 45000,
+            'min_quantity' => 8,
             'stock' => 25,
         ]);
         ProductVariant::create([
@@ -83,6 +97,8 @@ class ProductVariantSeeder extends Seeder
             'color' => 'Be',
             'size' => 'M',
             'price' => 65000,
+            'wholesale_price' => 45000,
+            'min_quantity' => 8,
             'stock' => 20,
         ]);
         ProductVariant::create([
@@ -91,6 +107,8 @@ class ProductVariantSeeder extends Seeder
             'color' => 'Đen',
             'size' => 'S',
             'price' => 65000,
+            'wholesale_price' => 45000,
+            'min_quantity' => 8,
             'stock' => 28,
         ]);
 
@@ -102,6 +120,8 @@ class ProductVariantSeeder extends Seeder
             'color' => 'Đỏ',
             'size' => null,
             'price' => 180000,
+            'wholesale_price' => 120000,
+            'min_quantity' => 3,
             'stock' => 15,
         ]);
         ProductVariant::create([
@@ -110,6 +130,8 @@ class ProductVariantSeeder extends Seeder
             'color' => 'Xanh',
             'size' => null,
             'price' => 180000,
+            'wholesale_price' => 120000,
+            'min_quantity' => 3,
             'stock' => 12,
         ]);
 
@@ -121,6 +143,8 @@ class ProductVariantSeeder extends Seeder
             'color' => 'Vàng',
             'size' => null,
             'price' => 80000,
+            'wholesale_price' => 55000,
+            'min_quantity' => 5,
             'stock' => 40,
         ]);
 
@@ -132,6 +156,8 @@ class ProductVariantSeeder extends Seeder
             'color' => null,
             'size' => null,
             'price' => 250000,
+            'wholesale_price' => 180000,
+            'min_quantity' => 2,
             'stock' => 10,
         ]);
 
@@ -143,6 +169,8 @@ class ProductVariantSeeder extends Seeder
             'color' => null,
             'size' => null,
             'price' => 350000,
+            'wholesale_price' => 250000,
+            'min_quantity' => 1,
             'stock' => 8,
         ]);
 
@@ -154,6 +182,8 @@ class ProductVariantSeeder extends Seeder
             'color' => 'Đen',
             'size' => '30',
             'price' => 250000,
+            'wholesale_price' => 180000,
+            'min_quantity' => 4,
             'stock' => 18,
         ]);
         ProductVariant::create([
@@ -162,6 +192,8 @@ class ProductVariantSeeder extends Seeder
             'color' => 'Đen',
             'size' => '31',
             'price' => 250000,
+            'wholesale_price' => 180000,
+            'min_quantity' => 4,
             'stock' => 20,
         ]);
         ProductVariant::create([
@@ -170,6 +202,8 @@ class ProductVariantSeeder extends Seeder
             'color' => 'Trắng',
             'size' => '30',
             'price' => 250000,
+            'wholesale_price' => 180000,
+            'min_quantity' => 4,
             'stock' => 15,
         ]);
 
@@ -181,6 +215,8 @@ class ProductVariantSeeder extends Seeder
             'color' => 'Xanh',
             'size' => null,
             'price' => 50000,
+            'wholesale_price' => 35000,
+            'min_quantity' => 10,
             'stock' => 100,
         ]);
         ProductVariant::create([
@@ -189,6 +225,8 @@ class ProductVariantSeeder extends Seeder
             'color' => 'Hồng',
             'size' => null,
             'price' => 50000,
+            'wholesale_price' => 35000,
+            'min_quantity' => 10,
             'stock' => 90,
         ]);
     }
