@@ -236,6 +236,11 @@ return [
         'tracking_code_optional'  => '运单号（可选）',
         'tracking_code_placeholder' => '输入运单号...',
 
+        'purchase_type'           => '购买方式',
+        'wholesale'               => '批发',
+        'retail'                  => '零售',
+        'has_wholesale'           => '含批发商品',
+
         'no_payment_info'             => '该订单没有付款信息。',
         'invalid_payment_transition'  => '无法将付款状态从 \':from\' 更改为 \':to\'',
         'payment_status_updated'      => '付款状态更新成功！',

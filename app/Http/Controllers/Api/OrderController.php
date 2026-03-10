@@ -218,10 +218,26 @@ class OrderController extends Controller
                         $supplier_id = $variant->product->supplier_id;
                     }
 
-                    $totalAmount += $variant->price * $item['quantity'];
+                    $isWholesale = (bool) $item['is_wholesale'];
+
+                    if ($isWholesale) {
+                        if (empty($variant->wholesale_price)) {
+                            throw new \Exception("Sản phẩm {$variant->product->name} ({$variant->sku}) không hỗ trợ mua sỉ");
+                        }
+                        if (!empty($variant->min_quantity) && $item['quantity'] < $variant->min_quantity) {
+                            throw new \Exception("Sản phẩm {$variant->product->name} ({$variant->sku}) yêu cầu mua sỉ tối thiểu {$variant->min_quantity} cái");
+                        }
+                        $unitPrice = $variant->wholesale_price;
+                    } else {
+                        $unitPrice = $variant->price;
+                    }
+
+                    $totalAmount += $unitPrice * $item['quantity'];
                     $validatedItems[] = [
                         'variant' => $variant,
                         'quantity' => $item['quantity'],
+                        'is_wholesale' => $isWholesale,
+                        'unit_price' => $unitPrice,
                     ];
                 }
 
@@ -245,8 +261,9 @@ class OrderController extends Controller
                     OrderItem::create([
                         'order_id' => $order->id,
                         'product_variant_id' => $item['variant']->id,
-                        'price' => $item['variant']->price,
+                        'price' => $item['unit_price'],
                         'quantity' => $item['quantity'],
+                        'is_wholesale' => $item['is_wholesale'],
                     ]);
 
                     // Update product variant stock

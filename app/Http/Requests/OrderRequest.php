@@ -28,6 +28,7 @@ class OrderRequest extends FormRequest
             'items' => 'required|array|min:1',
             'items.*.product_variant_id' => 'required|integer|exists:product_variants,id',
             'items.*.quantity' => 'required|integer|min:1',
+            'items.*.is_wholesale' => 'required|boolean',
             'items.*.cart_item_id' => 'nullable|integer|exists:cart_items,id',
         ];
     }
@@ -47,6 +48,8 @@ class OrderRequest extends FormRequest
             'items.*.product_variant_id.exists' => 'Biến thể sản phẩm không tồn tại',
             'items.*.quantity.required' => 'Số lượng là bắt buộc',
             'items.*.quantity.min' => 'Số lượng phải lớn hơn 0',
+            'items.*.is_wholesale.required' => 'Hình thức mua (sỉ/lẻ) là bắt buộc',
+            'items.*.is_wholesale.boolean' => 'Hình thức mua không hợp lệ',
             'items.*.cart_item_id.integer' => 'ID mục giỏ hàng phải là số',
             'items.*.cart_item_id.exists' => 'Mục giỏ hàng không tồn tại',
         ];

@@ -236,6 +236,11 @@ return [
         'tracking_code_optional'  => 'Mã vận đơn (tùy chọn)',
         'tracking_code_placeholder' => 'Nhập mã vận đơn...',
 
+        'purchase_type'           => 'Hình thức mua',
+        'wholesale'               => 'Mua sỉ',
+        'retail'                  => 'Mua lẻ',
+        'has_wholesale'           => 'Có SP mua sỉ',
+
         'no_payment_info'             => 'Đơn hàng không có thông tin thanh toán.',
         'invalid_payment_transition'  => 'Không thể chuyển trạng thái thanh toán từ \':from\' sang \':to\'.',
         'payment_status_updated'      => 'Cập nhật trạng thái thanh toán thành công!',

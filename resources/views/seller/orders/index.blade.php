@@ -158,6 +158,13 @@
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                         <div>{{ $order->user->name }}</div>
                                         <div class="text-gray-400">{{ $order->user->email }}</div>
+                                        @if($order->items->contains('is_wholesale', true))
+                                            <div class="mt-1">
+                                                <span class="inline-flex items-center rounded-md bg-orange-50 px-1.5 py-0.5 text-xs font-medium text-orange-700 ring-1 ring-inset ring-orange-600/20">
+                                                    {{ __('seller.orders.has_wholesale') }}
+                                                </span>
+                                            </div>
+                                        @endif
                                     </td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900 font-medium">
                                         {{ number_format($order->total_amount, 0, ',', '.') }} ₫

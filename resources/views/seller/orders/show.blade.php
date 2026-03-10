@@ -64,6 +64,17 @@
                                                     - {{ __('seller.orders.size_label', ['size' => $item->productVariant->size]) }}
                                                 @endif
                                             </p>
+                                            <div class="mt-1">
+                                                @if($item->is_wholesale)
+                                                    <span class="inline-flex items-center rounded-full bg-orange-100 px-2 py-0.5 text-xs font-semibold text-orange-800">
+                                                        {{ __('seller.orders.wholesale') }}
+                                                    </span>
+                                                @else
+                                                    <span class="inline-flex items-center rounded-full bg-sky-100 px-2 py-0.5 text-xs font-semibold text-sky-800">
+                                                        {{ __('seller.orders.retail') }}
+                                                    </span>
+                                                @endif
+                                            </div>
                                         </div>
                                         <div class="flex flex-1 items-end justify-between text-sm">
                                             <p class="text-gray-500">{{ __('seller.orders.quantity', ['qty' => $item->quantity]) }}</p>
