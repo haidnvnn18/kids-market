@@ -29,7 +29,7 @@ class PasswordResetController extends Controller
 
         return back()->with(
             'status',
-            'Nếu email tồn tại trong hệ thống, chúng tôi đã gửi liên kết đặt lại mật khẩu.'
+            __('seller.auth.reset_link_sent')
         );
     }
 

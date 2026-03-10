@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi" class="h-full bg-white">
+<html lang="{{ app()->getLocale() }}" class="h-full bg-white">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -40,6 +40,25 @@
 
             @yield('footer')
         </div>
+    </div>
+    <!-- Language Switcher -->
+    <div class="fixed top-4 right-4 flex items-center gap-x-1">
+        <form method="POST" action="{{ route('seller.language') }}">
+            @csrf
+            <input type="hidden" name="locale" value="vi">
+            <button type="submit"
+                class="rounded px-2 py-1 text-xs font-medium {{ app()->getLocale() === 'vi' ? 'bg-indigo-100 text-indigo-700' : 'text-gray-400 hover:bg-gray-100' }}">
+                🇻🇳 VI
+            </button>
+        </form>
+        <form method="POST" action="{{ route('seller.language') }}">
+            @csrf
+            <input type="hidden" name="locale" value="zh">
+            <button type="submit"
+                class="rounded px-2 py-1 text-xs font-medium {{ app()->getLocale() === 'zh' ? 'bg-indigo-100 text-indigo-700' : 'text-gray-400 hover:bg-gray-100' }}">
+                🇨🇳 中文
+            </button>
+        </form>
     </div>
 </body>
 </html>

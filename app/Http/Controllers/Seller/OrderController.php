@@ -15,7 +15,7 @@ class OrderController extends Controller
         $supplier = $user->supplier;
 
         if (!$supplier) {
-            abort(403, 'Bạn không có quyền truy cập.');
+            abort(403, __('seller.common.forbidden'));
         }
 
         $query = Order::where('supplier_id', $supplier->id)
@@ -60,7 +60,7 @@ class OrderController extends Controller
         $supplier = $user->supplier;
 
         if (!$supplier) {
-            abort(403, 'Bạn không có quyền truy cập.');
+            abort(403, __('seller.common.forbidden'));
         }
 
         $order = Order::where('supplier_id', $supplier->id)
@@ -83,7 +83,7 @@ class OrderController extends Controller
         $supplier = $user->supplier;
 
         if (!$supplier) {
-            abort(403, 'Bạn không có quyền truy cập.');
+            abort(403, __('seller.common.forbidden'));
         }
 
         $order = Order::where('supplier_id', $supplier->id)
@@ -92,7 +92,7 @@ class OrderController extends Controller
 
         if (!$order->payment) {
             return back()->withErrors([
-                'payment_status' => 'Đơn hàng không có thông tin thanh toán.'
+                'payment_status' => __('seller.orders.no_payment_info')
             ]);
         }
 
@@ -112,7 +112,7 @@ class OrderController extends Controller
 
         if (!in_array($newStatus, $allowedTransitions[$oldStatus])) {
             return back()->withErrors([
-                'payment_status' => "Không thể chuyển trạng thái thanh toán từ '{$oldStatus}' sang '{$newStatus}'."
+                'payment_status' => __('seller.orders.invalid_payment_transition', ['from' => $oldStatus, 'to' => $newStatus])
             ]);
         }
 
@@ -128,7 +128,7 @@ class OrderController extends Controller
         }
 
         return redirect()->route('seller.orders.show', $order->id)
-            ->with('success', 'Cập nhật trạng thái thanh toán thành công!');
+            ->with('success', __('seller.orders.payment_status_updated'));
     }
 
     public function updateShipmentStatus(Request $request, $id)
@@ -137,7 +137,7 @@ class OrderController extends Controller
         $supplier = $user->supplier;
 
         if (!$supplier) {
-            abort(403, 'Bạn không có quyền truy cập.');
+            abort(403, __('seller.common.forbidden'));
         }
 
         $order = Order::where('supplier_id', $supplier->id)
@@ -146,7 +146,7 @@ class OrderController extends Controller
 
         if (!$order->shipment) {
             return back()->withErrors([
-                'shipment_status' => 'Đơn hàng không có thông tin vận chuyển.'
+                'shipment_status' => __('seller.orders.no_shipment_info')
             ]);
         }
 
@@ -169,7 +169,7 @@ class OrderController extends Controller
 
         if (!in_array($newStatus, $allowedTransitions[$oldStatus])) {
             return back()->withErrors([
-                'shipment_status' => "Không thể chuyển trạng thái vận chuyển từ '{$oldStatus}' sang '{$newStatus}'."
+                'shipment_status' => __('seller.orders.invalid_shipment_transition', ['from' => $oldStatus, 'to' => $newStatus])
             ]);
         }
 
@@ -194,6 +194,6 @@ class OrderController extends Controller
         }
 
         return redirect()->route('seller.orders.show', $order->id)
-            ->with('success', 'Cập nhật trạng thái vận chuyển thành công!');
+            ->with('success', __('seller.orders.shipment_status_updated'));
     }
 }

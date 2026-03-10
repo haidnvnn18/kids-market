@@ -68,7 +68,7 @@ class ShopController extends Controller
 
         $supplier->save();
 
-        return redirect()->route('seller.shop.index')->with('success', 'Cập nhật thông tin cửa hàng thành công!');
+        return redirect()->route('seller.shop.index')->with('success', __('seller.shop.updated'));
     }
 
     public function deleteAvatar()
@@ -82,7 +82,7 @@ class ShopController extends Controller
             $supplier->save();
         }
 
-        return back()->with('success', 'Đã xóa avatar!');
+        return back()->with('success', __('seller.shop.avatar_deleted'));
     }
 
     public function deleteBanner()
@@ -96,6 +96,6 @@ class ShopController extends Controller
             $supplier->save();
         }
 
-        return back()->with('success', 'Đã xóa banner!');
+        return back()->with('success', __('seller.shop.banner_deleted'));
     }
 }

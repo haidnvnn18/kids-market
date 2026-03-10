@@ -34,7 +34,7 @@ class AuthController extends Controller
                 $request->session()->regenerateToken();
 
                 return back()->withErrors([
-                    'email' => 'Thông tin đăng nhập không chính xác.',
+                    'email' => __('seller.auth.invalid_credentials'),
                 ])->onlyInput('email');
             }
 
@@ -43,7 +43,7 @@ class AuthController extends Controller
         }
 
         return back()->withErrors([
-            'email' => 'Thông tin đăng nhập không chính xác.',
+            'email' => __('seller.auth.invalid_credentials'),
         ])->onlyInput('email');
     }
 
@@ -88,7 +88,7 @@ class AuthController extends Controller
         Auth::login($user);
         $request->session()->regenerate();
 
-        return redirect()->route('seller.dashboard')->with('success', 'Đăng ký thành công!');
+        return redirect()->route('seller.dashboard')->with('success', __('seller.auth.register_success'));
     }
 
     public function logout(Request $request)

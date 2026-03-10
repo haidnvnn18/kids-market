@@ -7,59 +7,61 @@ use App\Http\Controllers\Seller\PasswordResetController;
 use App\Http\Controllers\Seller\ProductController;
 use App\Http\Controllers\Seller\ReviewController;
 use App\Http\Controllers\Seller\ShopController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-// Guest routes (not authenticated)
-Route::middleware('guest')->prefix('seller')->name('seller.')->group(function () {
-    // Login
-    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-    Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:seller-login');
+// ── Chuyển ngôn ngữ (không cần auth, không cần seller.locale trước) ──
+Route::post('/seller/language', function (Request $request) {
+    $request->validate(['locale' => 'required|in:vi,zh']);
+    session(['seller_locale' => $request->locale]);
+    return back();
+})->name('seller.language');
 
-    // Register
-    Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
-    Route::post('/register', [AuthController::class, 'register'])->middleware('throttle:seller-register');
+// ── Tất cả route seller đều dùng middleware seller.locale ──
+Route::middleware('seller.locale')->group(function () {
 
-    // Password Reset
-    Route::get('/forgot-password', [PasswordResetController::class, 'showForgotPasswordForm'])
-        ->name('password.request');
-    Route::post('/forgot-password', [PasswordResetController::class, 'sendResetLinkEmail'])
-        ->middleware('throttle:seller-password-reset')
-        ->name('password.email');
-    Route::get('/reset-password/{token}', [PasswordResetController::class, 'showResetPasswordForm'])
-        ->name('password.reset');
-    Route::post('/reset-password', [PasswordResetController::class, 'resetPassword'])
-        ->middleware('throttle:seller-password-reset')
-        ->name('password.update');
-});
+    // Guest routes (not authenticated)
+    Route::middleware('guest')->prefix('seller')->name('seller.')->group(function () {
+        Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+        Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:seller-login');
 
-// Protected routes (authenticated sellers only)
-Route::middleware('seller')->prefix('seller')->name('seller.')->group(function () {
-    // Dashboard
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
+        Route::post('/register', [AuthController::class, 'register'])->middleware('throttle:seller-register');
 
-    // Shop Management
-    Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
-    Route::get('/shop/edit', [ShopController::class, 'edit'])->name('shop.edit');
-    Route::put('/shop', [ShopController::class, 'update'])->name('shop.update');
-    Route::delete('/shop/avatar', [ShopController::class, 'deleteAvatar'])->name('shop.delete-avatar');
-    Route::delete('/shop/banner', [ShopController::class, 'deleteBanner'])->name('shop.delete-banner');
+        Route::get('/forgot-password', [PasswordResetController::class, 'showForgotPasswordForm'])
+            ->name('password.request');
+        Route::post('/forgot-password', [PasswordResetController::class, 'sendResetLinkEmail'])
+            ->middleware('throttle:seller-password-reset')
+            ->name('password.email');
+        Route::get('/reset-password/{token}', [PasswordResetController::class, 'showResetPasswordForm'])
+            ->name('password.reset');
+        Route::post('/reset-password', [PasswordResetController::class, 'resetPassword'])
+            ->middleware('throttle:seller-password-reset')
+            ->name('password.update');
+    });
 
-    // Product Management
-    Route::resource('products', ProductController::class)->except(['show']);
-    Route::delete('/products/images/{image}', [ProductController::class, 'deleteImage'])->name('products.delete-image');
+    // Protected routes (authenticated sellers only)
+    Route::middleware('seller')->prefix('seller')->name('seller.')->group(function () {
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    // Order Management
-    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
-    Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
-    Route::patch('/orders/{order}/payment-status', [OrderController::class, 'updatePaymentStatus'])->name('orders.update-payment-status');
-    Route::patch('/orders/{order}/shipment-status', [OrderController::class, 'updateShipmentStatus'])->name('orders.update-shipment-status');
+        Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
+        Route::get('/shop/edit', [ShopController::class, 'edit'])->name('shop.edit');
+        Route::put('/shop', [ShopController::class, 'update'])->name('shop.update');
+        Route::delete('/shop/avatar', [ShopController::class, 'deleteAvatar'])->name('shop.delete-avatar');
+        Route::delete('/shop/banner', [ShopController::class, 'deleteBanner'])->name('shop.delete-banner');
 
-    // Review Management
-    Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
-    Route::post('/reviews/{review}/reply', [ReviewController::class, 'reply'])->name('reviews.reply');
+        Route::resource('products', ProductController::class)->except(['show']);
+        Route::delete('/products/images/{image}', [ProductController::class, 'deleteImage'])->name('products.delete-image');
 
-    // Logout
-    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+        Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+        Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+        Route::patch('/orders/{order}/payment-status', [OrderController::class, 'updatePaymentStatus'])->name('orders.update-payment-status');
+        Route::patch('/orders/{order}/shipment-status', [OrderController::class, 'updateShipmentStatus'])->name('orders.update-shipment-status');
 
-    // TODO: Add other seller routes here
-});
+        Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
+        Route::post('/reviews/{review}/reply', [ReviewController::class, 'reply'])->name('reviews.reply');
+
+        Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    });
+
+}); // end seller.locale group

@@ -1,6 +1,6 @@
 @extends('seller.layout')
 
-@section('title', 'Chỉnh sửa thông tin cửa hàng')
+@section('title', __('seller.shop.edit_title'))
 
 @section('content')
 <div class="mb-8">
@@ -11,8 +11,8 @@
             </svg>
         </a>
         <div>
-            <h1 class="text-2xl font-semibold text-gray-900">Chỉnh sửa thông tin cửa hàng</h1>
-            <p class="mt-2 text-sm text-gray-700">Cập nhật thông tin, hình ảnh của cửa hàng</p>
+            <h1 class="text-2xl font-semibold text-gray-900">{{ __('seller.shop.edit_title') }}</h1>
+            <p class="mt-2 text-sm text-gray-700">{{ __('seller.shop.edit_description') }}</p>
         </div>
     </div>
 </div>
@@ -24,8 +24,8 @@
     <!-- Banner Section -->
     <div class="overflow-hidden rounded-lg bg-white shadow">
         <div class="px-6 py-5">
-            <h3 class="text-lg font-medium leading-6 text-gray-900">Banner cửa hàng</h3>
-            <p class="mt-1 text-sm text-gray-500">Tải lên ảnh banner cho cửa hàng của bạn (Tối đa 5MB)</p>
+            <h3 class="text-lg font-medium leading-6 text-gray-900">{{ __('seller.shop.banner_title') }}</h3>
+            <p class="mt-1 text-sm text-gray-500">{{ __('seller.shop.banner_description') }}</p>
         </div>
         <div class="border-t border-gray-200 px-6 py-5">
             <div class="space-y-4">
@@ -38,7 +38,7 @@
                             <svg class="-ml-0.5 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                             </svg>
-                            Xóa banner
+                            {{ __('seller.shop.delete_banner') }}
                         </button>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                 <!-- Upload New Banner -->
                 <div>
                     <label for="banner" class="block text-sm font-medium text-gray-900 mb-2">
-                        {{ $supplier->banner ? 'Thay đổi banner' : 'Tải lên banner' }}
+                        {{ $supplier->banner ? __('seller.shop.change_banner') : __('seller.shop.upload_banner') }}
                     </label>
                     <div class="flex items-center justify-center w-full">
                         <label for="banner-input" class="flex flex-col items-center justify-center w-full h-48 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
@@ -55,8 +55,8 @@
                                 <svg class="w-10 h-10 mb-3 text-gray-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
                                 </svg>
-                                <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Nhấp để tải lên</span> hoặc kéo thả</p>
-                                <p class="text-xs text-gray-500">PNG, JPG, GIF (Tối đa 5MB)</p>
+                                <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">{{ __('seller.common.click_to_upload') }}</span> {{ __('seller.common.or_drag_drop') }}</p>
+                                <p class="text-xs text-gray-500">{{ __('seller.shop.png_jpg_hint', ['size' => '5MB']) }}</p>
                             </div>
                         </label>
                     </div>
@@ -73,8 +73,8 @@
     <!-- Avatar Section -->
     <div class="overflow-hidden rounded-lg bg-white shadow">
         <div class="px-6 py-5">
-            <h3 class="text-lg font-medium leading-6 text-gray-900">Avatar cửa hàng</h3>
-            <p class="mt-1 text-sm text-gray-500">Tải lên ảnh đại diện cho cửa hàng của bạn (Tối đa 2MB)</p>
+            <h3 class="text-lg font-medium leading-6 text-gray-900">{{ __('seller.shop.avatar_title') }}</h3>
+            <p class="mt-1 text-sm text-gray-500">{{ __('seller.shop.avatar_description') }}</p>
         </div>
         <div class="border-t border-gray-200 px-6 py-5">
             <div class="flex items-start gap-x-6">
@@ -93,20 +93,20 @@
                     <!-- Upload New Avatar -->
                     <div>
                         <label for="avatar-input" class="block text-sm font-medium text-gray-900 mb-2">
-                            {{ $supplier->avatar ? 'Thay đổi avatar' : 'Tải lên avatar' }}
+                            {{ $supplier->avatar ? __('seller.shop.change_avatar') : __('seller.shop.upload_avatar') }}
                         </label>
                         <div class="flex items-center gap-x-3">
                             <label for="avatar-input" class="cursor-pointer rounded-md bg-white px-4 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-                                Chọn ảnh
+                                {{ __('seller.shop.choose_image') }}
                             </label>
                             <input id="avatar-input" name="avatar" type="file" class="hidden" accept="image/*" onchange="previewImage(this, 'avatar-preview')">
                             @if($supplier->avatar)
                                 <button type="button" onclick="document.getElementById('avatar-delete-form').submit()" class="rounded-md bg-red-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500">
-                                    Xóa avatar
+                                    {{ __('seller.shop.delete_avatar') }}
                                 </button>
                             @endif
                         </div>
-                        <p class="mt-2 text-xs text-gray-500">PNG, JPG, GIF (Tối đa 2MB)</p>
+                        <p class="mt-2 text-xs text-gray-500">{{ __('seller.shop.png_jpg_hint', ['size' => '2MB']) }}</p>
                         @error('avatar')
                             <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -124,15 +124,15 @@
     <!-- Basic Information -->
     <div class="overflow-hidden rounded-lg bg-white shadow">
         <div class="px-6 py-5">
-            <h3 class="text-lg font-medium leading-6 text-gray-900">Thông tin cơ bản</h3>
-            <p class="mt-1 text-sm text-gray-500">Thông tin chi tiết về cửa hàng của bạn</p>
+            <h3 class="text-lg font-medium leading-6 text-gray-900">{{ __('seller.shop.basic_info') }}</h3>
+            <p class="mt-1 text-sm text-gray-500">{{ __('seller.shop.basic_info_desc') }}</p>
         </div>
         <div class="border-t border-gray-200 px-6 py-5">
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
                 <!-- Brand Name -->
                 <div class="sm:col-span-2">
                     <label for="brand_name" class="block text-sm font-medium leading-6 text-gray-900">
-                        Tên thương hiệu <span class="text-red-500">*</span>
+                        {{ __('seller.shop.brand_name_label') }} <span class="text-red-500">*</span>
                     </label>
                     <div class="mt-2">
                            <input type="text" name="brand_name" id="brand_name" 
@@ -148,17 +148,17 @@
                 <!-- Country -->
                 <div class="sm:col-span-2">
                     <label for="country" class="block text-sm font-medium leading-6 text-gray-900">
-                        Quốc gia <span class="text-red-500">*</span>
+                        {{ __('seller.shop.country_label') }} <span class="text-red-500">*</span>
                     </label>
                     <div class="mt-2">
-                        <select name="country" id="country" data-tom-select placeholder="Chọn quốc gia"
+                        <select name="country" id="country" data-tom-select placeholder="{{ __('seller.shop.select_country') }}"
                             class="block w-full rounded-md border-0 py-2 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 @error('country') ring-red-300 focus:ring-red-500 @enderror"
                                 required>
-                            <option value="VN" {{ old('country', $supplier->country) == 'VN' ? 'selected' : '' }}>🇻🇳 Việt Nam</option>
-                            <option value="CN" {{ old('country', $supplier->country) == 'CN' ? 'selected' : '' }}>🇨🇳 Trung Quốc</option>
-                            <option value="US" {{ old('country', $supplier->country) == 'US' ? 'selected' : '' }}>🇺🇸 Hoa Kỳ</option>
-                            <option value="JP" {{ old('country', $supplier->country) == 'JP' ? 'selected' : '' }}>🇯🇵 Nhật Bản</option>
-                            <option value="KR" {{ old('country', $supplier->country) == 'KR' ? 'selected' : '' }}>🇰🇷 Hàn Quốc</option>
+                            <option value="VN" {{ old('country', $supplier->country) == 'VN' ? 'selected' : '' }}>{{ __('seller.countries.VN') }}</option>
+                            <option value="CN" {{ old('country', $supplier->country) == 'CN' ? 'selected' : '' }}>{{ __('seller.countries.CN') }}</option>
+                            <option value="US" {{ old('country', $supplier->country) == 'US' ? 'selected' : '' }}>{{ __('seller.countries.US') }}</option>
+                            <option value="JP" {{ old('country', $supplier->country) == 'JP' ? 'selected' : '' }}>{{ __('seller.countries.JP') }}</option>
+                            <option value="KR" {{ old('country', $supplier->country) == 'KR' ? 'selected' : '' }}>{{ __('seller.countries.KR') }}</option>
                         </select>
                     </div>
                     @error('country')
@@ -169,12 +169,12 @@
                 <!-- Description -->
                 <div class="sm:col-span-2">
                     <label for="description" class="block text-sm font-medium leading-6 text-gray-900">
-                        Mô tả
+                        {{ __('seller.shop.description_label') }}
                     </label>
                     <div class="mt-2">
                         <textarea name="description" id="description" rows="4" 
                                   class="block w-full rounded-md border-0 py-2 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 @error('description') ring-red-300 focus:ring-red-500 @enderror"
-                                  placeholder="Mô tả ngắn về cửa hàng của bạn...">{{ old('description', $supplier->description) }}</textarea>
+                                  placeholder="{{ __('seller.shop.description_placeholder') }}">{{ old('description', $supplier->description) }}</textarea>
                     </div>
                     @error('description')
                         <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
@@ -187,10 +187,10 @@
     <!-- Action Buttons -->
     <div class="flex items-center justify-end gap-x-6">
         <a href="{{ route('seller.shop.index') }}" class="rounded-md px-4 py-2 text-sm font-semibold text-gray-900 hover:bg-gray-100">
-            Hủy
+            {{ __('seller.common.cancel') }}
         </a>
         <button type="submit" class="rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-            Lưu thay đổi
+            {{ __('seller.shop.save_changes') }}
         </button>
     </div>
 </form>

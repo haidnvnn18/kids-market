@@ -1,18 +1,18 @@
 @extends('seller.layout')
 
-@section('title', 'Thông tin cửa hàng')
+@section('title', __('seller.shop.title'))
 
 @section('content')
 <div class="mb-8 flex items-center justify-between">
     <div>
-        <h1 class="text-2xl font-semibold text-gray-900">Thông tin cửa hàng</h1>
-        <p class="mt-2 text-sm text-gray-700">Quản lý thông tin chi tiết về cửa hàng của bạn</p>
+        <h1 class="text-2xl font-semibold text-gray-900">{{ __('seller.shop.title') }}</h1>
+        <p class="mt-2 text-sm text-gray-700">{{ __('seller.shop.description') }}</p>
     </div>
     <a href="{{ route('seller.shop.edit') }}" class="inline-flex items-center gap-x-2 rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
         <svg class="-ml-0.5 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
         </svg>
-        Chỉnh sửa
+        {{ __('seller.shop.edit_btn') }}
     </a>
 </div>
 
@@ -27,7 +27,7 @@
                     <svg class="mx-auto h-12 w-12 opacity-50" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
                     </svg>
-                    <p class="mt-2 text-sm font-medium">Chưa có banner</p>
+                    <p class="mt-2 text-sm font-medium">{{ __('seller.shop.no_banner') }}</p>
                 </div>
             </div>
         @endif
@@ -69,28 +69,28 @@
         <div class="border-t border-gray-200 pt-6">
             <dl class="divide-y divide-gray-100">
                 <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4">
-                    <dt class="text-sm font-medium text-gray-900">Tên thương hiệu</dt>
+                    <dt class="text-sm font-medium text-gray-900">{{ __('seller.shop.brand_name_label') }}</dt>
                     <dd class="mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0">{{ $supplier->brand_name }}</dd>
                 </div>
                 
                 <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4">
-                    <dt class="text-sm font-medium text-gray-900">Quốc gia</dt>
+                    <dt class="text-sm font-medium text-gray-900">{{ __('seller.shop.country_label') }}</dt>
                     <dd class="mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0">
                         @switch($supplier->country)
                             @case('VN')
-                                🇻🇳 Việt Nam
+                                {{ __('seller.countries.VN') }}
                                 @break
                             @case('CN')
-                                🇨🇳 Trung Quốc
+                                {{ __('seller.countries.CN') }}
                                 @break
                             @case('US')
-                                🇺🇸 Hoa Kỳ
+                                {{ __('seller.countries.US') }}
                                 @break
                             @case('JP')
-                                🇯🇵 Nhật Bản
+                                {{ __('seller.countries.JP') }}
                                 @break
                             @case('KR')
-                                🇰🇷 Hàn Quốc
+                                {{ __('seller.countries.KR') }}
                                 @break
                             @default
                                 {{ $supplier->country }}
@@ -99,7 +99,7 @@
                 </div>
                 
                 <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4">
-                    <dt class="text-sm font-medium text-gray-900">Đánh giá trung bình</dt>
+                    <dt class="text-sm font-medium text-gray-900">{{ __('seller.common.avg_rating') }}</dt>
                     <dd class="mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0">
                         <div class="flex items-center gap-x-2">
                             <div class="flex items-center">
@@ -122,18 +122,18 @@
                 
                 @if($supplier->description)
                 <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4">
-                    <dt class="text-sm font-medium text-gray-900">Mô tả</dt>
+                    <dt class="text-sm font-medium text-gray-900">{{ __('seller.shop.description_label') }}</dt>
                     <dd class="mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0">{{ $supplier->description }}</dd>
                 </div>
                 @endif
                 
                 <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4">
-                    <dt class="text-sm font-medium text-gray-900">Ngày tạo</dt>
+                    <dt class="text-sm font-medium text-gray-900">{{ __('seller.shop.created_at') }}</dt>
                     <dd class="mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0">{{ $supplier->created_at->format('d/m/Y H:i') }}</dd>
                 </div>
                 
                 <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4">
-                    <dt class="text-sm font-medium text-gray-900">Cập nhật lần cuối</dt>
+                    <dt class="text-sm font-medium text-gray-900">{{ __('seller.shop.updated_at') }}</dt>
                     <dd class="mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0">{{ $supplier->updated_at->format('d/m/Y H:i') }}</dd>
                 </div>
             </dl>

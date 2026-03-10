@@ -1,6 +1,6 @@
 @extends('seller.layout')
 
-@section('title', 'Thêm sản phẩm mới')
+@section('title', __('seller.products.create_title'))
 
 @section('content')
 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -13,8 +13,8 @@
                 </svg>
             </a>
             <div>
-                <h1 class="text-2xl font-semibold text-gray-900">Thêm sản phẩm mới</h1>
-                <p class="mt-1 text-sm text-gray-500">Điền thông tin sản phẩm và các phân loại</p>
+                <h1 class="text-2xl font-semibold text-gray-900">{{ __('seller.products.create_title') }}</h1>
+                <p class="mt-1 text-sm text-gray-500">{{ __('seller.products.create_desc') }}</p>
             </div>
         </div>
     </div>
@@ -25,19 +25,19 @@
         <!-- Basic Information -->
         <div class="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl">
             <div class="px-4 py-6 sm:p-8">
-                <h2 class="text-base font-semibold leading-7 text-gray-900">Thông tin cơ bản</h2>
+                <h2 class="text-base font-semibold leading-7 text-gray-900">{{ __('seller.products.basic_info') }}</h2>
                 <div class="mt-6 grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-6">
                     <!-- Product Name -->
                     <div class="col-span-full">
-                        <label for="name" class="block text-sm font-medium leading-6 text-gray-900">Tên sản phẩm <span class="text-red-500">*</span></label>
+                        <label for="name" class="block text-sm font-medium leading-6 text-gray-900">{{ __('seller.products.name') }} <span class="text-red-500">*</span></label>
                         <input type="text" name="name" id="name" value="{{ old('name') }}" required class="mt-2 block w-full rounded-md border-0 py-2 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                     </div>
 
                     <!-- Category -->
                     <div class="sm:col-span-3">
-                        <label for="category_id" class="block text-sm font-medium leading-6 text-gray-900">Danh mục <span class="text-red-500">*</span></label>
-                        <select name="category_id" id="category_id" required placeholder="Chọn danh mục" data-tom-select class="mt-2 block w-full rounded-md border-0 py-2 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                            <option value="">Chọn danh mục</option>
+                        <label for="category_id" class="block text-sm font-medium leading-6 text-gray-900">{{ __('seller.common.category') }} <span class="text-red-500">*</span></label>
+                        <select name="category_id" id="category_id" required placeholder="{{ __('seller.products.select_category') }}" data-tom-select class="mt-2 block w-full rounded-md border-0 py-2 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                            <option value="">{{ __('seller.products.select_category') }}</option>
                             @foreach($categories as $category)
                                 @if($category->children->isNotEmpty())
                                     <optgroup label="{{ $category->name }}">
@@ -58,16 +58,16 @@
 
                     <!-- Status -->
                     <div class="sm:col-span-3">
-                        <label for="status" class="block text-sm font-medium leading-6 text-gray-900">Trạng thái <span class="text-red-500">*</span></label>
-                        <select name="status" id="status" required placeholder="Chọn trạng thái" data-tom-select class="mt-2 block w-full rounded-md border-0 py-2 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                            <option value="active" {{ old('status') === 'active' ? 'selected' : '' }}>Hoạt động</option>
-                            <option value="hidden" {{ old('status') === 'hidden' ? 'selected' : '' }}>Ẩn</option>
+                        <label for="status" class="block text-sm font-medium leading-6 text-gray-900">{{ __('seller.common.status') }} <span class="text-red-500">*</span></label>
+                        <select name="status" id="status" required placeholder="{{ __('seller.products.select_status') }}" data-tom-select class="mt-2 block w-full rounded-md border-0 py-2 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                            <option value="active" {{ old('status') === 'active' ? 'selected' : '' }}>{{ __('seller.common.active') }}</option>
+                            <option value="hidden" {{ old('status') === 'hidden' ? 'selected' : '' }}>{{ __('seller.common.hidden') }}</option>
                         </select>
                     </div>
 
                     <!-- Description -->
                     <div class="col-span-full">
-                        <label for="description" class="block text-sm font-medium leading-6 text-gray-900">Mô tả</label>
+                        <label for="description" class="block text-sm font-medium leading-6 text-gray-900">{{ __('seller.common.description') }}</label>
                         <textarea name="description" id="description" rows="4" class="mt-2 block w-full rounded-md border-0 py-2 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">{{ old('description') }}</textarea>
                     </div>
                 </div>
@@ -78,12 +78,12 @@
         <div class="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl">
             <div class="px-4 py-6 sm:p-8">
                 <div class="flex items-center justify-between">
-                    <h2 class="text-base font-semibold leading-7 text-gray-900">Phân loại sản phẩm</h2>
+                    <h2 class="text-base font-semibold leading-7 text-gray-900">{{ __('seller.products.variants_title') }}</h2>
                     <button type="button" onclick="addVariant()" class="inline-flex items-center gap-x-1.5 rounded-md bg-indigo-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500">
                         <svg class="-ml-0.5 h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                             <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
                         </svg>
-                        Thêm phân loại
+                        {{ __('seller.products.add_variant') }}
                     </button>
                 </div>
 
@@ -99,37 +99,37 @@
 
                             <!-- Color -->
                             <div class="sm:col-span-1">
-                                <label class="block text-sm font-medium text-gray-700">Màu sắc</label>
+                                <label class="block text-sm font-medium text-gray-700">{{ __('seller.products.color') }}</label>
                                 <input type="text" name="variants[0][color]" class="mt-1 block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm">
                             </div>
 
                             <!-- Size -->
                             <div class="sm:col-span-1">
-                                <label class="block text-sm font-medium text-gray-700">Kích thước</label>
+                                <label class="block text-sm font-medium text-gray-700">{{ __('seller.products.size') }}</label>
                                 <input type="text" name="variants[0][size]" class="mt-1 block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm">
                             </div>
 
                             <!-- Price -->
                             <div class="sm:col-span-2">
-                                <label class="block text-sm font-medium text-gray-700">Giá lẻ <span class="text-red-500">*</span></label>
+                                <label class="block text-sm font-medium text-gray-700">{{ __('seller.products.retail_price') }} <span class="text-red-500">*</span></label>
                                 <input type="number" name="variants[0][price]" required min="0" step="0.01" class="mt-1 block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm">
                             </div>
 
                             <!-- Wholesale Price -->
                             <div class="sm:col-span-2">
-                                <label class="block text-sm font-medium text-gray-700">Giá sỉ <span class="text-red-500">*</span></label>
+                                <label class="block text-sm font-medium text-gray-700">{{ __('seller.products.wholesale_price') }} <span class="text-red-500">*</span></label>
                                 <input type="number" name="variants[0][wholesale_price]" required min="0" step="0.01" class="mt-1 block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm">
                             </div>
 
                             <!-- Min Quantity -->
                             <div class="sm:col-span-1">
-                                <label class="block text-sm font-medium text-gray-700">SL giá sỉ <span class="text-red-500">*</span></label>
+                                <label class="block text-sm font-medium text-gray-700">{{ __('seller.products.min_wholesale_qty') }} <span class="text-red-500">*</span></label>
                                 <input type="number" name="variants[0][min_quantity]" required min="1" value="1" class="mt-1 block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm">
                             </div>
 
                             <!-- Stock -->
                             <div class="sm:col-span-2">
-                                <label class="block text-sm font-medium text-gray-700">Tồn kho <span class="text-red-500">*</span></label>
+                                <label class="block text-sm font-medium text-gray-700">{{ __('seller.common.stock') }} <span class="text-red-500">*</span></label>
                                 <input type="number" name="variants[0][stock]" required min="0" class="mt-1 block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm">
                             </div>
 
@@ -145,20 +145,20 @@
                     </div>
                 </div>
 
-                <p class="mt-4 text-sm text-gray-500">* Mỗi phân loại cần có SKU, giá lẻ, giá sỉ, số lượng tối thiểu để áp giá sỉ và tồn kho riêng. Màu sắc và kích thước là tùy chọn.</p>
+                <p class="mt-4 text-sm text-gray-500">{{ __('seller.products.variant_note') }}</p>
             </div>
         </div>
 
         <!-- Product Images -->
         <div class="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl">
             <div class="px-4 py-6 sm:p-8">
-                <h2 class="text-base font-semibold leading-7 text-gray-900">Hình ảnh sản phẩm</h2>
+                <h2 class="text-base font-semibold leading-7 text-gray-900">{{ __('seller.products.images_title') }}</h2>
                 <div class="mt-6">
                     <label for="images" class="block text-sm font-medium text-gray-700">
-                        Tải lên hình ảnh (Tối đa 5 ảnh, mỗi ảnh không quá 2MB)
+                        {{ __('seller.products.upload_images') }}
                     </label>
                     <input type="file" name="images[]" id="images" multiple accept="image/*" class="mt-2 block w-full rounded-md border-0 py-2 px-3 text-sm text-gray-900 ring-1 ring-inset ring-gray-300 file:mr-4 file:rounded-md file:border-0 file:bg-indigo-50 file:px-3 file:py-2 file:text-sm file:font-medium file:text-indigo-700 hover:file:bg-indigo-100 focus:ring-2 focus:ring-inset focus:ring-indigo-600">
-                    <p class="mt-2 text-xs text-gray-500">Ảnh đầu tiên sẽ được sử dụng làm ảnh chính của sản phẩm.</p>
+                    <p class="mt-2 text-xs text-gray-500">{{ __('seller.products.first_image_note') }}</p>
                     
                     <!-- Image Preview -->
                     <div id="image-preview" class="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-5"></div>
@@ -168,8 +168,8 @@
 
         <!-- Form Actions -->
         <div class="flex items-center justify-end gap-x-6">
-            <a href="{{ route('seller.products.index') }}" class="text-sm font-semibold leading-6 text-gray-900">Hủy</a>
-            <button type="submit" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Lưu sản phẩm</button>
+            <a href="{{ route('seller.products.index') }}" class="text-sm font-semibold leading-6 text-gray-900">{{ __('seller.common.cancel') }}</a>
+            <button type="submit" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">{{ __('seller.products.save') }}</button>
         </div>
     </form>
 </div>
@@ -190,37 +190,37 @@ function addVariant() {
 
                 <!-- Color -->
                 <div class="sm:col-span-1">
-                    <label class="block text-sm font-medium text-gray-700">Màu sắc</label>
+                    <label class="block text-sm font-medium text-gray-700">@lang('seller.products.color')</label>
                     <input type="text" name="variants[${variantIndex}][color]" class="mt-1 block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm">
                 </div>
 
                 <!-- Size -->
                 <div class="sm:col-span-1">
-                    <label class="block text-sm font-medium text-gray-700">Kích thước</label>
+                    <label class="block text-sm font-medium text-gray-700">@lang('seller.products.size')</label>
                     <input type="text" name="variants[${variantIndex}][size]" class="mt-1 block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm">
                 </div>
 
                 <!-- Price -->
                 <div class="sm:col-span-2">
-                    <label class="block text-sm font-medium text-gray-700">Giá lẻ <span class="text-red-500">*</span></label>
+                    <label class="block text-sm font-medium text-gray-700">@lang('seller.products.retail_price') <span class="text-red-500">*</span></label>
                     <input type="number" name="variants[${variantIndex}][price]" required min="0" step="0.01" class="mt-1 block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm">
                 </div>
 
                 <!-- Wholesale Price -->
                 <div class="sm:col-span-2">
-                    <label class="block text-sm font-medium text-gray-700">Giá sỉ <span class="text-red-500">*</span></label>
+                    <label class="block text-sm font-medium text-gray-700">@lang('seller.products.wholesale_price') <span class="text-red-500">*</span></label>
                     <input type="number" name="variants[${variantIndex}][wholesale_price]" required min="0" step="0.01" class="mt-1 block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm">
                 </div>
 
                 <!-- Min Quantity -->
                 <div class="sm:col-span-1">
-                    <label class="block text-sm font-medium text-gray-700">SL giá sỉ <span class="text-red-500">*</span></label>
+                    <label class="block text-sm font-medium text-gray-700">@lang('seller.products.min_wholesale_qty') <span class="text-red-500">*</span></label>
                     <input type="number" name="variants[${variantIndex}][min_quantity]" required min="1" value="1" class="mt-1 block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm">
                 </div>
 
                 <!-- Stock -->
                 <div class="sm:col-span-2">
-                    <label class="block text-sm font-medium text-gray-700">Tồn kho <span class="text-red-500">*</span></label>
+                    <label class="block text-sm font-medium text-gray-700">@lang('seller.common.stock') <span class="text-red-500">*</span></label>
                     <input type="number" name="variants[${variantIndex}][stock]" required min="0" class="mt-1 block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm">
                 </div>
 
@@ -244,7 +244,7 @@ function removeVariant(button) {
     if (variantRows.length > 1) {
         button.closest('.variant-row').remove();
     } else {
-        alert('Sản phẩm phải có ít nhất một phân loại.');
+        alert('@lang("seller.products.min_one_variant")');
     }
 }
 
@@ -256,14 +256,14 @@ document.getElementById('images').addEventListener('change', function(e) {
     const files = Array.from(e.target.files);
     
     if (files.length > 5) {
-        alert('Bạn chỉ có thể tải lên tối đa 5 ảnh.');
+        alert('@lang("seller.products.max_images")');
         e.target.value = '';
         return;
     }
     
     files.forEach((file, index) => {
         if (file.size > 2 * 1024 * 1024) {
-            alert(`Ảnh ${file.name} vượt quá 2MB.`);
+            alert('@lang("seller.products.image_over_limit")'.replace(':name', file.name));
             return;
         }
         
@@ -273,7 +273,7 @@ document.getElementById('images').addEventListener('change', function(e) {
             div.className = 'relative';
             div.innerHTML = `
                 <img src="${e.target.result}" class="h-32 w-full object-cover rounded-lg">
-                ${index === 0 ? '<span class="absolute top-2 left-2 bg-indigo-600 text-white text-xs px-2 py-1 rounded">Ảnh chính</span>' : ''}
+                ${index === 0 ? '<span class="absolute top-2 left-2 bg-indigo-600 text-white text-xs px-2 py-1 rounded">@lang("seller.products.main_image_label")</span>' : ''}
             `;
             preview.appendChild(div);
         };

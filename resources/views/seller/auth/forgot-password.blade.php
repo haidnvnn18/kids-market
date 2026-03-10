@@ -1,12 +1,12 @@
 @extends('seller.auth.layout')
 
-@section('title', 'Quên mật khẩu')
+@section('title', __('seller.auth.forgot_password_title'))
 
-@section('heading', 'Quên mật khẩu')
+@section('heading', __('seller.auth.forgot_password_title'))
 
 @section('content')
 <div class="mb-4 text-sm text-gray-600">
-    Quên mật khẩu? Không vấn đề gì. Chỉ cần nhập địa chỉ email của bạn và chúng tôi sẽ gửi cho bạn liên kết đặt lại mật khẩu qua email.
+    {{ __('seller.auth.forgot_password_description') }}
 </div>
 
 <form class="space-y-6" action="{{ route('seller.password.email') }}" method="POST">
@@ -27,7 +27,7 @@
     <div>
         <button type="submit" 
                 class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-            Gửi liên kết đặt lại mật khẩu
+            {{ __('seller.auth.send_reset_link') }}
         </button>
     </div>
 </form>
@@ -36,7 +36,7 @@
 @section('footer')
 <p class="mt-10 text-center text-sm text-gray-500">
     <a href="{{ route('seller.login') }}" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
-        Quay lại đăng nhập
+        {{ __('seller.auth.back_to_login') }}
     </a>
 </p>
 @endsection

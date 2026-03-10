@@ -18,9 +18,10 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
-            'auth.token' => \App\Http\Middleware\AuthToken::class,
+            'auth.token'          => \App\Http\Middleware\AuthToken::class,
             'auth.token.optional' => \App\Http\Middleware\AuthTokenOptional::class,
-            'seller' => \App\Http\Middleware\SellerMiddleware::class,
+            'seller'              => \App\Http\Middleware\SellerMiddleware::class,
+            'seller.locale'       => \App\Http\Middleware\SetSellerLocale::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

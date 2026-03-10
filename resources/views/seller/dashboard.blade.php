@@ -1,11 +1,11 @@
 @extends('seller.layout')
 
-@section('title', 'Bảng điều khiển')
+@section('title', __('seller.dashboard.title'))
 
 @section('content')
 <div class="mb-8">
-    <h1 class="text-2xl font-semibold text-gray-900">Bảng điều khiển</h1>
-    <p class="mt-2 text-sm text-gray-700">Chào mừng trở lại, {{ Auth::user()->name }}!</p>
+    <h1 class="text-2xl font-semibold text-gray-900">{{ __('seller.dashboard.title') }}</h1>
+    <p class="mt-2 text-sm text-gray-700">{{ __('seller.dashboard.welcome', ['name' => Auth::user()->name]) }}</p>
 </div>
 
 <!-- Stats Today & Overall -->
@@ -21,7 +21,7 @@
                 </div>
                 <div class="ml-5 w-0 flex-1">
                     <dl>
-                        <dt class="truncate text-sm font-medium text-gray-500">Tổng sản phẩm</dt>
+                        <dt class="truncate text-sm font-medium text-gray-500">{{ __('seller.dashboard.total_products') }}</dt>
                         <dd class="flex items-baseline">
                             <div class="text-2xl font-semibold text-gray-900">{{ $stats['total_products'] }}</div>
                         </dd>
@@ -42,7 +42,7 @@
                 </div>
                 <div class="ml-5 w-0 flex-1">
                     <dl>
-                        <dt class="truncate text-sm font-medium text-gray-500">Tổng đơn hàng</dt>
+                        <dt class="truncate text-sm font-medium text-gray-500">{{ __('seller.dashboard.total_orders') }}</dt>
                         <dd class="flex items-baseline">
                             <div class="text-2xl font-semibold text-gray-900">{{ $stats['total_orders'] }}</div>
                         </dd>
@@ -63,7 +63,7 @@
                 </div>
                 <div class="ml-5 w-0 flex-1">
                     <dl>
-                        <dt class="truncate text-sm font-medium text-gray-500">Tổng doanh thu</dt>
+                        <dt class="truncate text-sm font-medium text-gray-500">{{ __('seller.dashboard.total_revenue') }}</dt>
                         <dd class="flex items-baseline">
                             <div class="text-2xl font-semibold text-gray-900">{{ number_format($stats['total_revenue'], 0, ',', '.') }}đ</div>
                         </dd>
@@ -84,7 +84,7 @@
                 </div>
                 <div class="ml-5 w-0 flex-1">
                     <dl>
-                        <dt class="truncate text-sm font-medium text-gray-500">Đơn chờ xử lý</dt>
+                        <dt class="truncate text-sm font-medium text-gray-500">{{ __('seller.dashboard.pending_orders') }}</dt>
                         <dd class="flex items-baseline">
                             <div class="text-2xl font-semibold text-gray-900">{{ $stats['pending_orders'] }}</div>
                         </dd>
@@ -98,21 +98,21 @@
 <!-- Store Info -->
 <div class="overflow-hidden rounded-lg bg-white shadow">
     <div class="p-6">
-        <h2 class="text-base font-semibold leading-7 text-gray-900">Thông tin cửa hàng</h2>
-        <p class="mt-1 text-sm leading-6 text-gray-500">Thông tin cơ bản về cửa hàng của bạn.</p>
+        <h2 class="text-base font-semibold leading-7 text-gray-900">{{ __('seller.dashboard.shop_info') }}</h2>
+        <p class="mt-1 text-sm leading-6 text-gray-500">{{ __('seller.dashboard.shop_info_desc') }}</p>
         
         <div class="mt-6 border-t border-gray-100">
             <dl class="divide-y divide-gray-100">
                 <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                    <dt class="text-sm font-medium leading-6 text-gray-900">Tên thương hiệu</dt>
+                    <dt class="text-sm font-medium leading-6 text-gray-900">{{ __('seller.common.brand_name') }}</dt>
                     <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ $supplier->brand_name }}</dd>
                 </div>
                 <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                    <dt class="text-sm font-medium leading-6 text-gray-900">Quốc gia</dt>
+                    <dt class="text-sm font-medium leading-6 text-gray-900">{{ __('seller.common.country') }}</dt>
                     <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ $supplier->country }}</dd>
                 </div>
                 <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                    <dt class="text-sm font-medium leading-6 text-gray-900">Đánh giá trung bình</dt>
+                    <dt class="text-sm font-medium leading-6 text-gray-900">{{ __('seller.common.avg_rating') }}</dt>
                     <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
                         <div class="flex items-center">
                             <span class="text-lg font-semibold">{{ number_format($supplier->rating_avg, 1) }}</span>
@@ -124,7 +124,7 @@
                 </div>
                 @if($supplier->description)
                 <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                    <dt class="text-sm font-medium leading-6 text-gray-900">Mô tả</dt>
+                    <dt class="text-sm font-medium leading-6 text-gray-900">{{ __('seller.common.description') }}</dt>
                     <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ $supplier->description }}</dd>
                 </div>
                 @endif
@@ -135,7 +135,7 @@
 
 <!-- Quick Actions -->
 <div class="mt-8">
-    <h2 class="text-base font-semibold leading-7 text-gray-900 mb-4">Hành động nhanh</h2>
+    <h2 class="text-base font-semibold leading-7 text-gray-900 mb-4">{{ __('seller.dashboard.quick_actions') }}</h2>
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <a href="{{ route('seller.products.create') }}" class="relative flex items-center space-x-3 rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm hover:border-gray-400 hover:shadow-md transition">
             <div class="flex-shrink-0">
@@ -145,7 +145,7 @@
             </div>
             <div class="min-w-0 flex-1">
                 <span class="absolute inset-0" aria-hidden="true"></span>
-                <p class="text-sm font-medium text-gray-900">Thêm sản phẩm</p>
+                <p class="text-sm font-medium text-gray-900">{{ __('seller.products.add') }}</p>
             </div>
         </a>
 
@@ -157,7 +157,7 @@
             </div>
             <div class="min-w-0 flex-1">
                 <span class="absolute inset-0" aria-hidden="true"></span>
-                <p class="text-sm font-medium text-gray-900">Xem đơn hàng</p>
+                <p class="text-sm font-medium text-gray-900">{{ __('seller.dashboard.view_orders') }}</p>
             </div>
         </a>
 
@@ -169,7 +169,7 @@
             </div>
             <div class="min-w-0 flex-1">
                 <span class="absolute inset-0" aria-hidden="true"></span>
-                <p class="text-sm font-medium text-gray-900">Xem đánh giá</p>
+                <p class="text-sm font-medium text-gray-900">{{ __('seller.dashboard.view_reviews') }}</p>
             </div>
         </a>
 
@@ -182,7 +182,7 @@
             </div>
             <div class="min-w-0 flex-1">
                 <span class="absolute inset-0" aria-hidden="true"></span>
-                <p class="text-sm font-medium text-gray-900">Cài đặt cửa hàng</p>
+                <p class="text-sm font-medium text-gray-900">{{ __('seller.dashboard.shop_settings') }}</p>
             </div>
         </a>
     </div>

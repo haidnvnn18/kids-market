@@ -94,6 +94,6 @@ class ReviewController extends Controller
         ]);
 
         return redirect()->route('seller.reviews.index')
-            ->with('success', 'Đã trả lời đánh giá thành công');
+            ->with('success', __('seller.reviews.reply_success'));
     }
 }

@@ -114,10 +114,10 @@ class ProductController extends Controller
             }
 
             DB::commit();
-            return redirect()->route('seller.products.index')->with('success', 'Tạo sản phẩm thành công!');
+            return redirect()->route('seller.products.index')->with('success', __('seller.products.created'));
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->withInput()->withErrors(['error' => 'Có lỗi xảy ra: ' . $e->getMessage()]);
+            return back()->withInput()->withErrors(['error' => __('seller.common.error_occurred') . ' ' . $e->getMessage()]);
         }
     }
 
@@ -226,10 +226,10 @@ class ProductController extends Controller
             }
 
             DB::commit();
-            return redirect()->route('seller.products.index')->with('success', 'Cập nhật sản phẩm thành công!');
+            return redirect()->route('seller.products.index')->with('success', __('seller.products.updated'));
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->withInput()->withErrors(['error' => 'Có lỗi xảy ra: ' . $e->getMessage()]);
+            return back()->withInput()->withErrors(['error' => __('seller.common.error_occurred') . ' ' . $e->getMessage()]);
         }
     }
 
@@ -249,7 +249,7 @@ class ProductController extends Controller
 
         $product->delete();
 
-        return redirect()->route('seller.products.index')->with('success', 'Xóa sản phẩm thành công!');
+        return redirect()->route('seller.products.index')->with('success', __('seller.products.deleted'));
     }
 
     public function deleteImage(ProductImage $image)
@@ -266,6 +266,6 @@ class ProductController extends Controller
 
         $image->delete();
 
-        return back()->with('success', 'Đã xóa ảnh!');
+        return back()->with('success', __('seller.products.image_deleted'));
     }
 }
