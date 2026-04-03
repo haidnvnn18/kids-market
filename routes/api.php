@@ -11,6 +11,12 @@ use App\Http\Controllers\Api\ShopController;
 use App\Http\Controllers\Api\ProvinceController;
 use App\Http\Controllers\Api\DistrictController;
 use App\Http\Controllers\Api\ShippingAddressController;
+use App\Http\Controllers\Api\Seller\AuthController as SellerAuthController;
+use App\Http\Controllers\Api\Seller\DashboardController as SellerDashboardController;
+use App\Http\Controllers\Api\Seller\ShopController as SellerShopController;
+use App\Http\Controllers\Api\Seller\ProductController as SellerProductController;
+use App\Http\Controllers\Api\Seller\OrderController as SellerOrderController;
+use App\Http\Controllers\Api\Seller\ReviewController as SellerReviewController;
 
 Route::post('/register', [AuthController::class, 'register'])->middleware('throttle:api-register');
 Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:api-login');
@@ -58,3 +64,46 @@ Route::middleware('auth.token')->group(function () {
     Route::patch('/shipping-addresses/{id}/set-default', [ShippingAddressController::class, 'setDefault']);
     Route::delete('/shipping-addresses/{id}', [ShippingAddressController::class, 'destroy']);
 });
+
+// -------------------------------------------------------------------------
+// Seller API routes
+// -------------------------------------------------------------------------
+Route::prefix('seller')->group(function () {
+
+    // Public: Auth
+    Route::post('/auth/register', [SellerAuthController::class, 'register'])->middleware('throttle:api-register');
+    Route::post('/auth/login', [SellerAuthController::class, 'login'])->middleware('throttle:api-login');
+
+    // Protected: requires valid seller JWT
+    Route::middleware('auth.token.seller')->group(function () {
+        Route::post('/auth/logout', [SellerAuthController::class, 'logout']);
+
+        // Dashboard
+        Route::get('/dashboard', [SellerDashboardController::class, 'index']);
+
+        // Shop
+        Route::get('/shop', [SellerShopController::class, 'show']);
+        Route::put('/shop', [SellerShopController::class, 'update']);
+        Route::delete('/shop/avatar', [SellerShopController::class, 'deleteAvatar']);
+        Route::delete('/shop/banner', [SellerShopController::class, 'deleteBanner']);
+
+        // Products
+        Route::get('/products', [SellerProductController::class, 'index']);
+        Route::post('/products', [SellerProductController::class, 'store']);
+        Route::get('/products/{id}', [SellerProductController::class, 'show']);
+        Route::put('/products/{id}', [SellerProductController::class, 'update']);
+        Route::delete('/products/{id}', [SellerProductController::class, 'destroy']);
+        Route::delete('/products/images/{imageId}', [SellerProductController::class, 'deleteImage']);
+
+        // Orders
+        Route::get('/orders', [SellerOrderController::class, 'index']);
+        Route::get('/orders/{id}', [SellerOrderController::class, 'show']);
+        Route::patch('/orders/{id}/payment-status', [SellerOrderController::class, 'updatePaymentStatus']);
+        Route::patch('/orders/{id}/shipment-status', [SellerOrderController::class, 'updateShipmentStatus']);
+
+        // Reviews
+        Route::get('/reviews', [SellerReviewController::class, 'index']);
+        Route::post('/reviews/{id}/reply', [SellerReviewController::class, 'reply']);
+    });
+});
+

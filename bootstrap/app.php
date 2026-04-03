@@ -20,6 +20,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'auth.token'          => \App\Http\Middleware\AuthToken::class,
             'auth.token.optional' => \App\Http\Middleware\AuthTokenOptional::class,
+            'auth.token.seller'   => \App\Http\Middleware\AuthTokenSeller::class,
             'seller'              => \App\Http\Middleware\SellerMiddleware::class,
             'seller.locale'       => \App\Http\Middleware\SetSellerLocale::class,
         ]);
