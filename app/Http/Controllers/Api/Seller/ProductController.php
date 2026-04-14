@@ -310,7 +310,7 @@ class ProductController extends Controller
             'images'      => $product->relationLoaded('images')
                 ? $product->images->map(fn ($img) => [
                     'id'       => $img->id,
-                    'url'      => asset('storage/' . $img->image_url),
+                    'url'      => $img->image_url,
                     'is_main'  => (bool) $img->is_main,
                 ])->values()
                 : [],
