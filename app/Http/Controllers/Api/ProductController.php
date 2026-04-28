@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\ProductLike;
 use App\Models\ProductView;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 
@@ -309,5 +310,19 @@ class ProductController extends Controller
                 'error' => $e->getMessage()
             ], 500);
         }
+    }
+
+    public function categories(Request $request): JsonResponse
+    {
+        $categories = Category::all();
+
+        return response()->json([
+            'success' => true,
+            'data'    => $categories->map(fn ($c) => [
+                'id'   => $c->id,
+                'name' => $c->name,
+                'slug' => $c->slug,
+            ]),
+        ]);
     }
 }

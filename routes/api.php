@@ -24,6 +24,7 @@ Route::post('/social-login', [AuthController::class, 'socialLogin'])->middleware
 Route::get('/check-username', [AuthController::class, 'checkUsername'])->middleware('throttle:api-check-username');
 
 // Product routes
+Route::get('/products/categories', [ProductController::class, 'categories']);
 Route::get('/products/search', [ProductController::class, 'search']);
 Route::get('/products/recommendations/home', [ProductController::class, 'getHomePageRecommendations'])->middleware('auth.token.optional');
 Route::post('/products/{id}/track-view', [ProductController::class, 'trackView'])->middleware('auth.token');
@@ -65,6 +66,9 @@ Route::middleware('auth.token')->group(function () {
     Route::delete('/shipping-addresses/{id}', [ShippingAddressController::class, 'destroy']);
 });
 
+// Image upload route
+Route::post('/upload-image', [App\Http\Controllers\Api\ImageUploadController::class, 'upload'])->middleware('auth.token');
+
 // -------------------------------------------------------------------------
 // Seller API routes
 // -------------------------------------------------------------------------
@@ -104,6 +108,9 @@ Route::prefix('seller')->group(function () {
         // Reviews
         Route::get('/reviews', [SellerReviewController::class, 'index']);
         Route::post('/reviews/{id}/reply', [SellerReviewController::class, 'reply']);
+
+        // Image upload
+        Route::post('/upload-image', [App\Http\Controllers\Api\ImageUploadController::class, 'upload']);
     });
 });
 

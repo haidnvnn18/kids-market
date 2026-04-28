@@ -37,12 +37,12 @@ class ProductController extends Controller
 
         return response()->json([
             'success' => true,
-            'data'    => $products->map(fn ($p) => $this->formatProduct($p)),
-            'meta'    => [
+            'data' => $products->map(fn($p) => $this->formatProduct($p)),
+            'meta' => [
                 'current_page' => $products->currentPage(),
-                'last_page'    => $products->lastPage(),
-                'per_page'     => $products->perPage(),
-                'total'        => $products->total(),
+                'last_page' => $products->lastPage(),
+                'per_page' => $products->perPage(),
+                'total' => $products->total(),
             ],
         ]);
     }
@@ -61,7 +61,7 @@ class ProductController extends Controller
 
         return response()->json([
             'success' => true,
-            'data'    => $this->formatProduct($product),
+            'data' => $this->formatProduct($product),
         ]);
     }
 
@@ -74,37 +74,35 @@ class ProductController extends Controller
             $product = Product::create([
                 'supplier_id' => $supplier->id,
                 'category_id' => $request->category_id,
-                'name'        => $request->name,
+                'name' => $request->name,
                 'description' => $request->description,
-                'status'      => $request->status,
+                'status' => $request->status,
             ]);
 
             foreach ($request->variants as $variantData) {
                 ProductVariant::create([
-                    'product_id'      => $product->id,
-                    'sku'             => $variantData['sku'],
-                    'color'           => $variantData['color'] ?? null,
-                    'size'            => $variantData['size'] ?? null,
-                    'price'           => $variantData['price'],
+                    'product_id' => $product->id,
+                    'sku' => $variantData['sku'],
+                    'color' => $variantData['color'] ?? null,
+                    'size' => $variantData['size'] ?? null,
+                    'price' => $variantData['price'],
                     'wholesale_price' => $variantData['wholesale_price'],
-                    'min_quantity'    => $variantData['min_quantity'],
-                    'stock'           => $variantData['stock'],
+                    'min_quantity' => $variantData['min_quantity'],
+                    'stock' => $variantData['stock'],
                 ]);
             }
 
             if (!empty($request->images)) {
                 foreach ($request->images as $index => $imageData) {
-                    if (empty($imageData)) continue;
-                    $path = $this->saveBase64Image($imageData, 'products');
-                    if ($path) {
-                        ProductImage::create([
-                            'product_id' => $product->id,
-                            'image_url'  => $path,
-                            'is_main'    => $index === 0,
-                        ]);
-                    }
+                    $path = $imageData;
+                    ProductImage::create([
+                        'product_id' => $product->id,
+                        'image_url' => $path,
+                        'is_main' => $index === 0,
+                    ]);
                 }
             }
+
 
             DB::commit();
 
@@ -113,7 +111,7 @@ class ProductController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Tạo sản phẩm thành công',
-                'data'    => $this->formatProduct($product),
+                'data' => $this->formatProduct($product),
             ], 201);
 
         } catch (\Exception $e) {
@@ -138,9 +136,9 @@ class ProductController extends Controller
         try {
             $product->update([
                 'category_id' => $request->category_id,
-                'name'        => $request->name,
+                'name' => $request->name,
                 'description' => $request->description,
-                'status'      => $request->status,
+                'status' => $request->status,
             ]);
 
             $keptVariantIds = [];
@@ -152,26 +150,26 @@ class ProductController extends Controller
 
                     if ($variant) {
                         $variant->update([
-                            'sku'             => $variantData['sku'],
-                            'color'           => $variantData['color'] ?? null,
-                            'size'            => $variantData['size'] ?? null,
-                            'price'           => $variantData['price'],
+                            'sku' => $variantData['sku'],
+                            'color' => $variantData['color'] ?? null,
+                            'size' => $variantData['size'] ?? null,
+                            'price' => $variantData['price'],
                             'wholesale_price' => $variantData['wholesale_price'],
-                            'min_quantity'    => $variantData['min_quantity'],
-                            'stock'           => $variantData['stock'],
+                            'min_quantity' => $variantData['min_quantity'],
+                            'stock' => $variantData['stock'],
                         ]);
                         $keptVariantIds[] = $variant->id;
                     }
                 } else {
                     $variant = ProductVariant::create([
-                        'product_id'      => $product->id,
-                        'sku'             => $variantData['sku'],
-                        'color'           => $variantData['color'] ?? null,
-                        'size'            => $variantData['size'] ?? null,
-                        'price'           => $variantData['price'],
+                        'product_id' => $product->id,
+                        'sku' => $variantData['sku'],
+                        'color' => $variantData['color'] ?? null,
+                        'size' => $variantData['size'] ?? null,
+                        'price' => $variantData['price'],
                         'wholesale_price' => $variantData['wholesale_price'],
-                        'min_quantity'    => $variantData['min_quantity'],
-                        'stock'           => $variantData['stock'],
+                        'min_quantity' => $variantData['min_quantity'],
+                        'stock' => $variantData['stock'],
                     ]);
                     $keptVariantIds[] = $variant->id;
                 }
@@ -181,13 +179,14 @@ class ProductController extends Controller
             if (!empty($request->images)) {
                 $currentCount = $product->images()->count();
                 foreach ($request->images as $index => $imageData) {
-                    if (empty($imageData)) continue;
+                    if (empty($imageData))
+                        continue;
                     $path = $this->saveBase64Image($imageData, 'products');
                     if ($path) {
                         ProductImage::create([
                             'product_id' => $product->id,
-                            'image_url'  => $path,
-                            'is_main'    => $currentCount === 0 && $index === 0,
+                            'image_url' => $path,
+                            'is_main' => $currentCount === 0 && $index === 0,
                         ]);
                     }
                 }
@@ -200,7 +199,7 @@ class ProductController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Cập nhật sản phẩm thành công',
-                'data'    => $this->formatProduct($product),
+                'data' => $this->formatProduct($product),
             ]);
 
         } catch (\Exception $e) {
@@ -260,7 +259,7 @@ class ProductController extends Controller
     private function saveBase64Image(string $base64Data, string $directory): ?string
     {
         $imageData = preg_replace('/^data:image\/[^;]+;base64,/', '', $base64Data);
-        $decoded   = base64_decode($imageData, true);
+        $decoded = base64_decode($imageData, true);
 
         if ($decoded === false || strlen($decoded) > 2 * 1024 * 1024) {
             return null;
@@ -276,7 +275,7 @@ class ProductController extends Controller
         }
 
         $filename = Str::uuid() . '.' . $extension;
-        $path     = $directory . '/' . $filename;
+        $path = $directory . '/' . $filename;
 
         Storage::disk('public')->put($path, $decoded);
 
@@ -286,36 +285,36 @@ class ProductController extends Controller
     private function formatProduct(Product $product): array
     {
         return [
-            'id'          => $product->id,
-            'name'        => $product->name,
+            'id' => $product->id,
+            'name' => $product->name,
             'description' => $product->description,
-            'status'      => $product->status,
-            'category'    => $product->relationLoaded('category') ? [
-                'id'   => $product->category->id,
+            'status' => $product->status,
+            'category' => $product->relationLoaded('category') ? [
+                'id' => $product->category->id,
                 'name' => $product->category->name,
                 'slug' => $product->category->slug,
             ] : null,
-            'variants'    => $product->relationLoaded('variants')
-                ? $product->variants->map(fn ($v) => [
-                    'id'              => $v->id,
-                    'sku'             => $v->sku,
-                    'color'           => $v->color,
-                    'size'            => $v->size,
-                    'price'           => (float) $v->price,
+            'variants' => $product->relationLoaded('variants')
+                ? $product->variants->map(fn($v) => [
+                    'id' => $v->id,
+                    'sku' => $v->sku,
+                    'color' => $v->color,
+                    'size' => $v->size,
+                    'price' => (float) $v->price,
                     'wholesale_price' => (float) $v->wholesale_price,
-                    'min_quantity'    => $v->min_quantity,
-                    'stock'           => $v->stock,
+                    'min_quantity' => $v->min_quantity,
+                    'stock' => $v->stock,
                 ])->values()
                 : [],
-            'images'      => $product->relationLoaded('images')
-                ? $product->images->map(fn ($img) => [
-                    'id'       => $img->id,
-                    'url'      => $img->image_url,
-                    'is_main'  => (bool) $img->is_main,
+            'images' => $product->relationLoaded('images')
+                ? $product->images->map(fn($img) => [
+                    'id' => $img->id,
+                    'url' => $img->image_url,
+                    'is_main' => (bool) $img->is_main,
                 ])->values()
                 : [],
-            'created_at'  => $product->created_at?->toIso8601String(),
-            'updated_at'  => $product->updated_at?->toIso8601String(),
+            'created_at' => $product->created_at?->toIso8601String(),
+            'updated_at' => $product->updated_at?->toIso8601String(),
         ];
     }
 }
